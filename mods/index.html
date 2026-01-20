@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/favicon.ico">
+    <link rel="icon" href="../resources/images/favicon.ico">
     <title>Pixelalex Creations</title>
     <style>
         @font-face {
@@ -206,7 +206,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: url('../images/buttons/Screenshot-Button.png') center/cover no-repeat;
+            background: url('../resources/images/buttons/Screenshot-Button.png') center/cover no-repeat;
             cursor: pointer;
             border: 2px solid transparent;
             margin-bottom: 6px;
@@ -281,7 +281,7 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: url('../images/buttons/Changelog-Button.png') center/cover no-repeat;
+            background: url('../resources/images/buttons/Changelog-Button.png') center/cover no-repeat;
             cursor: pointer;
             margin-right: 6px;
             margin-top: 2px;
@@ -551,27 +551,27 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="../index.html"><img src="../images/pixelalex_creations-logo.png" class="nav-logo"></a>
+            <a href="../"><img src="../resources/images/pixelalex_creations-logo.png" class="nav-logo"></a>
             <nav class="nav-links">
-                <a href="mods.html">Mods</a>
-                <a href="resource_packs.html">Resource Packs</a>
-                <a href="data_packs.html">Data Packs</a>
-                <a href="shaders.html">Shaders</a>
-                <a href="modpacks.html">Modpacks</a>
-                <a href="plugins.html">Plugins</a>
+                <a href="../mods/">Mods</a>
+                <a href="../resource_packs/">Resource Packs</a>
+                <a href="../data_packs/">Data Packs</a>
+                <a href="../shaders/">Shaders</a>
+                <a href="../modpacks/">Modpacks</a>
+                <a href="../plugins/">Plugins</a>
             </nav>
         </div>
     </header>
 
-    <h1>Modpacks</h1>
+    <h1>Mods</h1>
     <div id="noProjects" class="no-projects" hidden>
-        No modpacks available at the moment.
+        No mods available at the moment.
     </div>
 
     <!-- FILTER -->
     <div class="layout">
         <aside class="sidebar">
-            <input id="searchBox" type="text" placeholder="Search modpacks...">
+            <input id="searchBox" type="text" placeholder="Search mods...">
             <h3>Game Version</h3>
             <div id="gameVersionFilters"></div>
             <h3>Loader</h3>
@@ -580,7 +580,7 @@
             <div id="categoryFilters"></div>
             <h3>Environment</h3>
             <div id="environmentFilters"></div>
-            <h3>Archived Modpacks</h3>
+            <h3>Archived Mods</h3>
             <div id="archivedFilter">
                 <button class="filter-btn" data-archived="true">✔</button>
                 <button class="filter-btn" data-archived="false">✖</button>
@@ -639,7 +639,7 @@
         // --- LOAD PROJECTS FROM PROJECT LIST ---
         async function loadProjectFilesList() {
             try {
-                const response = await fetch('modpacks/project_list.json');
+                const response = await fetch('project_list.json');
                 if (!response.ok) throw new Error('Fehler beim Laden der Projektliste');
                 const projectFiles = await response.json();
 

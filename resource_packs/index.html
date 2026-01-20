@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/favicon.ico">
+    <link rel="icon" href="../resources/images/favicon.ico">
     <title>Pixelalex Creations</title>
     <style>
         @font-face {
@@ -206,7 +206,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: url('../images/buttons/Screenshot-Button.png') center/cover no-repeat;
+            background: url('../resources/images/buttons/Screenshot-Button.png') center/cover no-repeat;
             cursor: pointer;
             border: 2px solid transparent;
             margin-bottom: 6px;
@@ -281,7 +281,7 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: url('../images/buttons/Changelog-Button.png') center/cover no-repeat;
+            background: url('../resources/images/buttons/Changelog-Button.png') center/cover no-repeat;
             cursor: pointer;
             margin-right: 6px;
             margin-top: 2px;
@@ -551,34 +551,36 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="../index.html"><img src="../images/pixelalex_creations-logo.png" class="nav-logo"></a>
+            <a href="../../"><img src="../resources/images/pixelalex_creations-logo.png" class="nav-logo"></a>
             <nav class="nav-links">
-                <a href="mods.html">Mods</a>
-                <a href="resource_packs.html">Resource Packs</a>
-                <a href="data_packs.html">Data Packs</a>
-                <a href="shaders.html">Shaders</a>
-                <a href="modpacks.html">Modpacks</a>
-                <a href="plugins.html">Plugins</a>
+                <a href="../mods/">Mods</a>
+                <a href="../resource_packs/">Resource Packs</a>
+                <a href="../data_packs/">Data Packs</a>
+                <a href="../shaders/">Shaders</a>
+                <a href="../modpacks/">Modpacks</a>
+                <a href="../plugins/">Plugins</a>
             </nav>
         </div>
     </header>
 
-    <h1>Plugins</h1>
+    <h1>Resource Packs</h1>
     <div id="noProjects" class="no-projects" hidden>
-        No plugins available at the moment.
+        No resource packs available at the moment.
     </div>
 
     <!-- FILTER -->
     <div class="layout">
         <aside class="sidebar">
-            <input id="searchBox" type="text" placeholder="Search plugins...">
+            <input id="searchBox" type="text" placeholder="Search resource packs...">
             <h3>Game Version</h3>
             <div id="gameVersionFilters"></div>
-            <h3>Loader</h3>
-            <div id="loaderFilters"></div>
+            <h3>Resolution</h3>
+            <div id="resolutionFilters"></div>
             <h3>Categories</h3>
             <div id="categoryFilters"></div>
-            <h3>Archived Plugins</h3>
+            <h3>Features</h3>
+            <div id="featureFilters"></div>
+            <h3>Archived Resource Packs</h3>
             <div id="archivedFilter">
                 <button class="filter-btn" data-archived="true">✔</button>
                 <button class="filter-btn" data-archived="false">✖</button>
@@ -606,8 +608,9 @@
         const normalGrid = document.getElementById("projectGrid");
 
         const gameVersionFilters = document.getElementById("gameVersionFilters");
-        const loaderFilters = document.getElementById("loaderFilters");
+        const resolutionFilters = document.getElementById("resolutionFilters");
         const categoryFilters = document.getElementById("categoryFilters");
+        const featureFilters = document.getElementById("featureFilters");
 
         document.querySelectorAll("#archivedFilter .filter-btn").forEach(btn => {
             btn.addEventListener("click", () => {
@@ -636,7 +639,7 @@
         // --- LOAD PROJECTS FROM PROJECT LIST ---
         async function loadProjectFilesList() {
             try {
-                const response = await fetch('plugins/project_list.json');
+                const response = await fetch('project_list.json');
                 if (!response.ok) throw new Error('Fehler beim Laden der Projektliste');
                 const projectFiles = await response.json();
 
@@ -684,24 +687,25 @@
             const card = document.createElement("div");
             card.className = "project-card";
 
-            const loaders = new Set();
+            const resolutions = new Set();
             const gameVersions = new Set();
 
             p.versions.forEach(v => {
                 v.variants.forEach(va => {
-                    va.loader.forEach(l => loaders.add(l));
+                    va.resolution.forEach(l => resolutions.add(l));
                     va["game-version"].forEach(gv => gameVersions.add(gv));
                 });
             });
 
-            const tags = [...loaders, ...p.categories];
+            const tags = [...resolutions, ...p.categories, ...p.features];
 
             card.dataset.tags = [...tags, ...gameVersions].join(",");
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
-            loaders.forEach(l => addFilterButton(loaderFilters, l));
+            resolutions.forEach(l => addFilterButton(resolutionFilters, l));
             p.categories.forEach(c => addFilterButton(categoryFilters, c));
+            p.features.forEach(e => addFilterButton(featureFilters, e));
             gameVersions.forEach(gv => addFilterButton(gameVersionFilters, gv));
 
             card.innerHTML = `
@@ -726,7 +730,7 @@
                     <div class="version-variants">
                         ${v.variants.map(va => `
                         <div class="variant-row">
-                            <span>${va.loader.join(", ")}</span>
+                            <span>${va.resolution.join(", ")}</span>
                             <span>${va["game-version"].join(", ")}</span>
                             <span>
                             ${Array.isArray(va.dependencies) && va.dependencies.length > 0
