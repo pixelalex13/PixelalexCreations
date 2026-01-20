@@ -1,0 +1,165 @@
+{
+  "name": "Zeniphyr",
+  "author": "pixelalex13",
+  "description": "Adds small and lightweight additions that improve some aspects of the game.",
+  "icon": "icon.png",
+  "screenshots": [],
+  "categories": ["Decoration", "Game Mechanics", "Utility"],
+  "environments": ["Client", "Server"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.6",
+      "variants": [
+        {
+          "game-version": ["1.21.10"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1rQLuWQKYB3UKZ6qXeZl5Him4fhmIO0R7"
+        },
+        {
+          "game-version": ["1.21.9"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1feaKXlpnlTUdqpEGXn2Hytdsex_-fZve"
+        },
+        {
+          "game-version": ["1.21.8"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1VRmMQAZLwc3k6f1wpfPD_iOPzM050vUZ"
+        }
+      ],
+      "changelog": "changelogs/1.6.md"
+    },
+    {
+      "project-version": "v1.5",
+      "variants": [
+        {
+          "game-version": ["1.21.10"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1xyfNVTHRIfbxoU_QDwump3FY25ym9NvH"
+        },
+        {
+          "game-version": ["1.21.9"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=141J9LNkxwtlONKHdOtCTCzCVSyd6hVZY"
+        },
+        {
+          "game-version": ["1.21.8"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1A83pgaMdXPDFckbHEcNvBDt7yYSEB9Q0"
+        }
+      ],
+      "changelog": "changelogs/1.5.md"
+    },
+    {
+      "project-version": "v1.4",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1gbViG0iH3Z71Rqaa6hCy8rqJVAoPBtdA"
+        }
+      ],
+      "changelog": "changelogs/1.4.md"
+    },
+    {
+      "project-version": "v1.3.1",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1fIfW4-uu_NVNSPhpp3dWuyQC9_b-oRF5"
+        }
+      ],
+      "changelog": "changelogs/1.3.1.md"
+    },
+    {
+      "project-version": "v1.3",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1VXI9RAv0Z8KNb5oYSn6kmqn_lkTgrUNo"
+        }
+      ],
+      "changelog": "changelogs/1.3.md"
+    },
+    {
+      "project-version": "v1.2.1",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1bFNnJqw4e0Z37vT_a8bc77qjoCo_JqbY"
+        }
+      ],
+      "changelog": "changelogs/1.2.1.md"
+    },
+    {
+      "project-version": "v1.2",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1XfhhqPgnBg_IeeaquO3Bzz2TgNdmB9w7"
+        }
+      ],
+      "changelog": "changelogs/1.2.md"
+    },
+    {
+      "project-version": "v1.1",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1RY8fWijy5bCfNAjiDl9QYX9bW8MRZdmb"
+        }
+      ],
+      "changelog": "changelogs/1.1.md"
+    },
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.1"],
+          "loader": ["Fabric", "Quilt", "NeoForge"],
+          "dependencies": [
+            {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
+            {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=1Te_sJp-N260x-5YnJWR595UZM6rvXENT"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}

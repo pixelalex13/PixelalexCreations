@@ -1,0 +1,24 @@
+{
+  "name": "Pixels-Hypixel-Pack",
+  "author": "pixelalex13",
+  "description": "A pvp pack for Hypixel (especially Bedwars).",
+  "icon": "icon.png",
+  "screenshots": [],
+  "categories": ["Combat", "Decoration", "Utility", "Vanilla-like"],
+  "features": ["Blocks", "Equipment", "Items"],
+  "archived": true,
+  "versions": [
+    {
+      "project-version": "V1.0",
+      "variants": [
+        {
+          "game-version": ["1.8.9"],
+          "resolution": ["16x"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1DxSc4NUboKtObzU3f3svPnTSqUw9dUJl"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}
