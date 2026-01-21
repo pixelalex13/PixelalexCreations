@@ -604,6 +604,11 @@
 
     <script>
         // --- FILTERS ---
+        const allGameVersions = new Set();
+        const allLoaders = new Set();
+        const allPerformanceImpacts = new Set();
+        const allCategories = new Set();
+        const allFeatures = new Set();
         const activeFilters = new Set();
         let archivedFilter = null;
         const searchBox = document.getElementById("searchBox");
@@ -656,6 +661,7 @@
                 }));
 
                 createAllProjects();
+                renderSortedFilters();
 
             } catch (err) {
                 console.error(err);
@@ -683,6 +689,49 @@
 
             allProjects.forEach(p => createProject(p));
         }
+        // --- SORT FILTER ---
+        function renderSortedFilters() {
+            [...allGameVersions]
+                .sort(compareVersionsDesc)
+                .forEach(v => addFilterButton(gameVersionFilters, v));
+
+            [...allLoaders]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(l => addFilterButton(loaderFilters, l));
+
+            [...allPerformanceImpacts]
+                .sort(comparePerformanceImpact)
+                .forEach(p => addFilterButton(performanceFilters, p));
+
+            [...allCategories]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(c => addFilterButton(categoryFilters, c));
+
+            [...allFeatures]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(f => addFilterButton(featureFilters, f));
+        }
+
+        function compareVersionsDesc(a, b) {
+            const pa = a.split(".").map(n => parseInt(n, 10));
+            const pb = b.split(".").map(n => parseInt(n, 10));
+
+            const len = Math.max(pa.length, pb.length);
+            for (let i = 0; i < len; i++) {
+                const na = pa[i] || 0;
+                const nb = pb[i] || 0;
+                if (na !== nb) return nb - na;
+            }
+            return 0;
+        }
+
+        function comparePerformanceImpact(a, b) {
+            const order = ["High", "Medium", "Low", "Potato", "Screenshot"];
+            const ia = order.indexOf(a);
+            const ib = order.indexOf(b);
+            return ia - ib;
+        }
+
 
         loadProjectFilesList();
 
@@ -700,17 +749,17 @@
                 });
             });
 
-            const tags = [...loaders, ...p.performance_impact, ...p.categories, ...p.features];
+            const tags = [...loaders, ...p.performance_impacts, ...p.categories, ...p.features];
 
             card.dataset.tags = [...tags, ...gameVersions].join(",");
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
-            loaders.forEach(l => addFilterButton(loaderFilters, l));
-            p.performance_impact.forEach(pf => addFilterButton(performanceFilters, pf));
-            p.categories.forEach(c => addFilterButton(categoryFilters, c));
-            p.features.forEach(e => addFilterButton(featureFilters, e));
-            gameVersions.forEach(gv => addFilterButton(gameVersionFilters, gv));
+            loaders.forEach(l => allLoaders.add(l));
+            p.performance_impacts.forEach(p => allPerformanceImpacts.add(p));
+            p.categories.forEach(c => allCategories.add(c));
+            p.features.forEach(f => allFeatures.add(f));
+            gameVersions.forEach(gv => allGameVersions.add(gv));
 
             card.innerHTML = `
                 <div class="project-header">

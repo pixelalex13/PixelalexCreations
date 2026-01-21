@@ -602,6 +602,10 @@
 
     <script>
         // --- FILTERS ---
+        const allGameVersions = new Set();
+        const allLoaders = new Set();
+        const allCategories = new Set();
+        const allEnvironments = new Set();
         const activeFilters = new Set();
         let archivedFilter = null;
         const searchBox = document.getElementById("searchBox");
@@ -653,6 +657,7 @@
                 }));
 
                 createAllProjects();
+                renderSortedFilters();
 
             } catch (err) {
                 console.error(err);
@@ -680,6 +685,37 @@
 
             allProjects.forEach(p => createProject(p));
         }
+        // --- SORT FILTER ---
+        function renderSortedFilters() {
+            [...allGameVersions]
+                .sort(compareVersionsDesc)
+                .forEach(v => addFilterButton(gameVersionFilters, v));
+
+            [...allLoaders]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(l => addFilterButton(loaderFilters, l));
+
+            [...allCategories]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(c => addFilterButton(categoryFilters, c));
+
+            [...allEnvironments]
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+                .forEach(e => addFilterButton(environmentFilters, e));
+        }
+
+        function compareVersionsDesc(a, b) {
+            const pa = a.split(".").map(n => parseInt(n, 10));
+            const pb = b.split(".").map(n => parseInt(n, 10));
+
+            const len = Math.max(pa.length, pb.length);
+            for (let i = 0; i < len; i++) {
+                const na = pa[i] || 0;
+                const nb = pb[i] || 0;
+                if (na !== nb) return nb - na;
+            }
+            return 0;
+        }
 
         loadProjectFilesList();
 
@@ -703,10 +739,10 @@
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
-            loaders.forEach(l => addFilterButton(loaderFilters, l));
-            p.categories.forEach(c => addFilterButton(categoryFilters, c));
-            p.environments.forEach(e => addFilterButton(environmentFilters, e));
-            gameVersions.forEach(gv => addFilterButton(gameVersionFilters, gv));
+            loaders.forEach(l => allLoaders.add(l));
+            p.categories.forEach(c => allCategories.add(c));
+            p.environments.forEach(e => allEnvironments.add(e));
+            gameVersions.forEach(gv => allGameVersions.add(gv));
 
             card.innerHTML = `
                 <div class="project-header">
