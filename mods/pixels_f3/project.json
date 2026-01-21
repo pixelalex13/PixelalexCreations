@@ -1,0 +1,36 @@
+{
+  "name": "Pixels F3",
+  "author": "pixelalex13",
+  "description": "Adds a small F3 like HUD overlay with only the important debug info.",
+  "icon": "icon.png",
+  "screenshots": [
+    { "src": "screenshots/1.png", "caption": "F3 HUD" }
+  ],
+  "categories": ["Utility"],
+  "environments": ["Client"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.11"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "download": "https://drive.google.com/file/d/1GNd3J4Vn71Wd3l9OHvYuQKj4kJ65B0kk/view?usp=drive_link"
+        },
+        {
+          "game-version": ["1.21.10"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "download": "https://drive.google.com/file/d/1UXNasdy_TKpOCDWdHRHUBVCSrilYwbyq/view?usp=drive_link"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
   "icon": "icon.png",
   "screenshots": [],
   "categories": ["Decoration", "Game Mechanics", "Utility"],
-  "environments": ["Client", "Server"],
+  "environments": ["Client and Server"],
   "archived": false,
   "versions": [
     {
@@ -14,19 +14,25 @@
         {
           "game-version": ["1.21.10"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1rQLuWQKYB3UKZ6qXeZl5Him4fhmIO0R7"
         },
         {
           "game-version": ["1.21.9"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1feaKXlpnlTUdqpEGXn2Hytdsex_-fZve"
         },
         {
           "game-version": ["1.21.8"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1VRmMQAZLwc3k6f1wpfPD_iOPzM050vUZ"
         }
       ],
@@ -38,19 +44,25 @@
         {
           "game-version": ["1.21.10"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1xyfNVTHRIfbxoU_QDwump3FY25ym9NvH"
         },
         {
           "game-version": ["1.21.9"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=141J9LNkxwtlONKHdOtCTCzCVSyd6hVZY"
         },
         {
           "game-version": ["1.21.8"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1A83pgaMdXPDFckbHEcNvBDt7yYSEB9Q0"
         }
       ],
@@ -63,6 +75,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -78,6 +91,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -93,6 +107,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -108,6 +123,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -123,6 +139,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -138,6 +155,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
@@ -153,6 +171,7 @@
           "game-version": ["1.21.1"],
           "loader": ["Fabric", "Quilt", "NeoForge"],
           "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"},
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],

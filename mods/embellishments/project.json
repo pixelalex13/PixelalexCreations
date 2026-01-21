@@ -5,7 +5,7 @@
   "icon": "icon.png",
   "screenshots": [],
   "categories": ["Decoration", "Game Mechanics", "Technology", "Utility"],
-  "environments": ["Client", "Server"],
+  "environments": ["Client and Server"],
   "archived": false,
   "versions": [
     {
@@ -14,7 +14,9 @@
         {
           "game-version": ["1.21.11"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1mYs42OdZgUJ2__KAc04EYA2ElDpaQysZ"
         }
       ],
@@ -26,7 +28,9 @@
         {
           "game-version": ["1.21.11"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1yvr8TwAjwZktEGOqMwz8N3IOPQ7xnW-n"
         }
       ],
@@ -38,7 +42,9 @@
         {
           "game-version": ["1.21.11"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1ZIHwb_khUO3npcQXcBzkhptthK4-Lagd"
         }
       ],
@@ -50,7 +56,9 @@
         {
           "game-version": ["1.21.11"],
           "loader": ["Fabric", "Quilt"],
-          "dependencies": [],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
           "download": "https://drive.google.com/uc?export=download&id=1G5IFvKFM9S1D_fgiS2vSG6xtC97-P_s5"
         }
       ],

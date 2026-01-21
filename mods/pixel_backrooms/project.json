@@ -9,7 +9,7 @@
     { "src": "screenshots/3.png", "caption": "Secrets" }
   ],
   "categories": ["Adventure", "Cursed"],
-  "environments": ["Client", "Server"],
+  "environments": ["Client and Server"],
   "archived": true,
   "versions": [
     {
