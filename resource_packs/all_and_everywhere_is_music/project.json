@@ -1,0 +1,38 @@
+{
+  "name": "All and Everywhere is Music",
+  "author": "pixelalex13",
+  "description": "Lets every music play everywhere!",
+  "icon": "icon.png",
+  "screenshots": [
+    { "src": "screenshots/1.png", "caption": "Version Numbering System" }
+  ],
+  "categories": ["Tweaks"],
+  "features": ["Audio"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "Sapphire",
+      "variants": [
+        {
+          "game-version": ["1.21.11", "1.21.10", "1.21.9", "1.21.8", "1.21.7", "1.21.6"],
+          "resolution": ["16x"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=15xma7BQid_uKxVeS78PcpdXCC2Xp3L1b"
+        }
+      ],
+      "changelog": "changelogs/sapphire.md"
+    },
+    {
+      "project-version": "Citrine",
+      "variants": [
+        {
+          "game-version": ["1.21.5", "1.21.4", "1.21.3", "1.21.2", "1.21.1", "1.21"],
+          "resolution": ["16x"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1ycppAOdPcbPDlHeM5a_jLdkhsmpP_T7p"
+        }
+      ],
+      "changelog": "changelogs/citrine.md"
+    }
+  ]
+}
