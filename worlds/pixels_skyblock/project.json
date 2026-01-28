@@ -1,0 +1,22 @@
+{
+  "name": "Pixels Skyblock",
+  "author": "pixelalex13",
+  "description": "A remake of the classic Skyblock, updated for newer versions, with custom advancements coming soon.",
+  "icon": "icon.png",
+  "screenshots": [],
+  "categories": ["Adventure", "Survival"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.11", "1.21.10"],
+          "dependencies": [],
+          "download": "https://drive.google.com/uc?export=download&id=1FkBSyO-q_MDa0gVGFs0bv0BLiNkYjeXi"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}

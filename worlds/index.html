@@ -283,7 +283,7 @@
 
         .variant-row {
             display: grid;
-            grid-template-columns: 140px 150px 1fr 120px;
+            grid-template-columns: 180px 1fr 120px;
             gap: 12px;
             align-items: center;
             text-align: center;
@@ -601,24 +601,20 @@
         </div>
     </header>
 
-    <h1>Resource Packs</h1>
+    <h1>Worlds</h1>
     <div id="noProjects" class="no-projects" hidden>
-        No resource packs available at the moment.
+        No worlds available at the moment.
     </div>
 
     <!-- FILTER -->
     <div class="layout">
         <aside class="sidebar">
-            <input id="searchBox" type="text" placeholder="Search resource packs...">
+            <input id="searchBox" type="text" placeholder="Search worlds...">
             <h3>Game Version</h3>
             <div id="gameVersionFilters"></div>
-            <h3>Resolution</h3>
-            <div id="resolutionFilters"></div>
             <h3>Categories</h3>
             <div id="categoryFilters"></div>
-            <h3>Features</h3>
-            <div id="featureFilters"></div>
-            <h3>Archived Resource Packs</h3>
+            <h3>Archived Worlds</h3>
             <div id="archivedFilter">
                 <button class="filter-btn" data-archived="true">✔</button>
                 <button class="filter-btn" data-archived="false">✖</button>
@@ -641,18 +637,14 @@
     <script>
         // --- FILTERS ---
         const allGameVersions = new Set();
-        const allResolutions = new Set();
         const allCategories = new Set();
-        const allFeatures = new Set();
         const activeFilters = new Set();
         let archivedFilter = null;
         const searchBox = document.getElementById("searchBox");
         const normalGrid = document.getElementById("projectGrid");
 
         const gameVersionFilters = document.getElementById("gameVersionFilters");
-        const resolutionFilters = document.getElementById("resolutionFilters");
         const categoryFilters = document.getElementById("categoryFilters");
-        const featureFilters = document.getElementById("featureFilters");
 
         document.querySelectorAll("#archivedFilter .filter-btn").forEach(btn => {
             btn.addEventListener("click", () => {
@@ -729,17 +721,9 @@
                 .sort(compareVersionsDesc)
                 .forEach(v => addFilterButton(gameVersionFilters, v));
 
-            [...allResolutions]
-                .sort(compareResolutionsDesc)
-                .forEach(r => addFilterButton(resolutionFilters, r));
-
             [...allCategories]
                 .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
                 .forEach(c => addFilterButton(categoryFilters, c));
-
-            [...allFeatures]
-                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
-                .forEach(f => addFilterButton(featureFilters, f));
         }
 
         function compareVersionsDesc(a, b) {
@@ -755,38 +739,27 @@
             return 0;
         }
 
-        function compareResolutionsDesc(a, b) {
-            const na = parseInt(a, 10);
-            const nb = parseInt(b, 10);
-
-            return nb - na;
-        }
-
         loadProjectFilesList();
 
         function createProject(p) {
             const card = document.createElement("div");
             card.className = "project-card";
 
-            const resolutions = new Set();
             const gameVersions = new Set();
 
             p.versions.forEach(v => {
                 v.variants.forEach(va => {
-                    va.resolution.forEach(l => resolutions.add(l));
                     va["game-version"].forEach(gv => gameVersions.add(gv));
                 });
             });
 
-            const tags = [...resolutions, ...p.categories, ...p.features];
+            const tags = [...p.categories];
 
             card.dataset.tags = [...tags, ...gameVersions].join(",");
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
-            resolutions.forEach(r => allResolutions.add(r));
             p.categories.forEach(c => allCategories.add(c));
-            p.features.forEach(f => allFeatures.add(f));
             gameVersions.forEach(gv => allGameVersions.add(gv));
 
             card.innerHTML = `
@@ -811,7 +784,6 @@
                     <div class="version-variants">
                         ${v.variants.map(va => `
                         <div class="variant-row">
-                            <span>${va.resolution.join(", ")}</span>
                             <span>${va["game-version"].join(", ")}</span>
                             <span>
                             ${Array.isArray(va.dependencies) && va.dependencies.length > 0

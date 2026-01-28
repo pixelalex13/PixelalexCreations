@@ -19,7 +19,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
-          "download": "https://drive.google.com/file/d/1GNd3J4Vn71Wd3l9OHvYuQKj4kJ65B0kk/view?usp=drive_link"
+          "download": "https://drive.google.com/uc?export=download&id=1GNd3J4Vn71Wd3l9OHvYuQKj4kJ65B0kk"
         },
         {
           "game-version": ["1.21.10"],
@@ -27,7 +27,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
-          "download": "https://drive.google.com/file/d/1UXNasdy_TKpOCDWdHRHUBVCSrilYwbyq/view?usp=drive_link"
+          "download": "https://drive.google.com/uc?export=download&id=1UXNasdy_TKpOCDWdHRHUBVCSrilYwbyq"
         }
       ],
       "changelog": "changelogs/1.0.md"

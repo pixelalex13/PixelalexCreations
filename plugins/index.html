@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en-US">
 
 <head>
     <meta charset="UTF-8">
@@ -590,6 +590,7 @@
                 <a href="../shaders/">Shaders</a>
                 <a href="../modpacks/">Modpacks</a>
                 <a href="../plugins/">Plugins</a>
+                <a href="../worlds/">Worlds</a>
             </nav>
         </div>
         <div class="nav-right">
@@ -677,12 +678,12 @@
         async function loadProjectFilesList() {
             try {
                 const response = await fetch('project_list.json');
-                if (!response.ok) throw new Error('Fehler beim Laden der Projektliste');
+                if (!response.ok) throw new Error('Error loading the project list');
                 const projectFiles = await response.json();
 
                 await Promise.all(projectFiles.map(async (file) => {
                     const res = await fetch(file);
-                    if (!res.ok) throw new Error(`Fehler beim Laden von ${file}`);
+                    if (!res.ok) throw new Error(`Error loading ${file}`);
                     const data = await res.json();
                     const basePath = file.substring(0, file.lastIndexOf("/") + 1);
                     data.basePath = basePath;
