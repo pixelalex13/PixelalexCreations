@@ -197,12 +197,22 @@
             text-shadow: none;
         }
 
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
         .project-tags span {
             background: #333;
             padding: 4px 8px;
             border-radius: 6px;
             font-size: 12px;
-            margin-right: 6px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .project-tags span[data-loader] {
+            color: #fff;
         }
 
         .chevron {
@@ -639,6 +649,17 @@
     </div>
 
     <script>
+        // --- LOAD LOADER COLORS ---
+        let loaderColors = {};
+        async function loadLoaderColors() {
+            try {
+                const res = await fetch('loader_colors.json');
+                loaderColors = await res.json();
+            } catch {
+                console.warn('No loader colors found');
+            }
+        }
+
         // --- FILTERS ---
         const allGameVersions = new Set();
         const allLoaders = new Set();
@@ -670,12 +691,39 @@
             btn.className = "filter-btn";
             btn.dataset.filter = value;
             btn.textContent = value;
+            const originalColor = loaderColors[value];
+            if (loaderColors[value]) {
+                btn.style.color = loaderColors[value];
+                btn.style.borderColor = loaderColors[value];
+            }
             btn.onclick = () => {
                 btn.classList.toggle("active");
                 activeFilters.has(value) ? activeFilters.delete(value) : activeFilters.add(value);
+                if (btn.classList.contains("active") && originalColor) {
+                    btn.style.borderColor = lightenColor(originalColor, 60);
+                } else if (originalColor) {
+                    btn.style.borderColor = originalColor;
+                }
                 applyFilters();
             }
             container.appendChild(btn);
+        }
+        
+        // --- LIGHTEN COLOR FOR FILTER ---
+        function lightenColor(hex, percent) {
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+
+            const num = parseInt(hex, 16);
+            let r = (num >> 16) + percent;
+            let g = ((num >> 8) & 0x00FF) + percent;
+            let b = (num & 0x0000FF) + percent;
+
+            r = r > 255 ? 255 : r;
+            g = g > 255 ? 255 : g;
+            b = b > 255 ? 255 : b;
+
+            return `#${(r.toString(16).padStart(2, '0'))}${(g.toString(16).padStart(2, '0'))}${(b.toString(16).padStart(2, '0'))}`;
         }
 
         // --- LOAD PROJECTS FROM PROJECT LIST ---
@@ -788,7 +836,16 @@
                 <div class="project-info">
                 <h3>${p.name} <span>by ${p.author}</span>${p.archived ? '<span class="archived-label">Archived</span>' : ''}</h3>
                 <p>${p.description}</p>
-                <div class="project-tags">${tags.map(t => `<span>${t}</span>`).join("")}</div>
+                <div class="project-tags">
+                ${tags.map(t => {
+                const color = allLoaders.has(t) ? loaderColors[t] || '#fff' : '#fff';
+                const border = allLoaders.has(t) ? `1px solid ${color}` : 'none';
+                return `<span style="
+                color: ${color}; 
+                border: ${border};
+                ">${t}</span>`;
+            }).join('')}
+                </div>
                 </div>
                 <div class="chevron-container">
                 ${p.screenshots?.length ? '<span class="header-screenshot-btn"></span>' : ''}
@@ -899,6 +956,13 @@
 
         // --- FILTER ---
         function applyFilters() { const query = searchBox.value.toLowerCase(); document.querySelectorAll(".project-card").forEach(card => { const tags = card.dataset.tags.split(","); const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f)); const matchesSearch = !query || card.dataset.searchText.includes(query); let matchesArchived = true; if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false"; card.style.display = matchesFilters && matchesSearch && matchesArchived ? "block" : "none"; }); }
+
+        // --- Loader Colors ---
+        async function init() {
+            await loadLoaderColors();
+            loadProjectFilesList();
+        }
+        init();
     </script>
 </body>
 
