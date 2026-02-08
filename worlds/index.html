@@ -343,6 +343,8 @@
             grid-column: 2 / -1;
             transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
             text-align: start;
+            text-shadow: 2px 2px 0 #000;
+            word-spacing: 1px;
         }
 
 
@@ -821,20 +823,51 @@
             const screenshotBtn = card.querySelector(".header-screenshot-btn");
             if (screenshotBtn) { screenshotBtn.addEventListener("click", e => { e.stopPropagation(); currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src })); currentScreenshotIndex = 0; updateModal(); openModal(); }); }
         }
+
+        // --- MARKDOWN COLOR FUNCTION ---
+        let COLOR_MAP = {};
+
+        fetch("../resources/fonts/color_map.json")
+            .then(res => res.json())
+            .then(json => {
+                COLOR_MAP = json;
+            });
+
+        function parseColors(text) {
+            return text.replace(/\[([#a-zA-Z0-9]+)]([\s\S]*?)\[\/]/g, (match, color, content) => {
+                let finalColor = null;
+
+                if (/^#[0-9a-fA-F]{6}$/.test(color)) {
+                    finalColor = color;
+                }
+
+                else if (COLOR_MAP[color.toLowerCase()]) {
+                    finalColor = COLOR_MAP[color.toLowerCase()];
+                }
+
+                if (!finalColor) return content;
+
+                return `<span style="color:${finalColor}">${content}</span>`;
+            });
+        }
+
         // --- READ MARKDOWN ---
         function renderMarkdown(md) {
-            return md
+            let html = md
                 .replace(/\r\n/g, "\n")
                 .replace(/^## (.*)$/gm, '<span style="font-weight:bold; font-size:calc(100% + 2px)">$1</span>')
                 .replace(/^- (.*)$/gm, "•  $1")
                 .replace(/~~(.*?)~~/g, '<s>$1</s>')
                 .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
                 .replace(/\*(.*?)\*/g, '<i>$1</i>')
+            html = parseColors(html);
+            return html
                 .replace(/\n/g, "<br>")
                 .split("\n")
                 .map(line => `<p style="margin:8px 0">${line}</p>`)
                 .join("");
         }
+        
         // --- CHANGELOG ---
         document.addEventListener("click", e => {
             if (e.target.classList.contains("changelog-btn")) {

@@ -36,7 +36,7 @@
       ],
       "changelog": "changelogs/1.2.md"
     },
-        {
+    {
       "project-version": "v1.1",
       "variants": [
         {
@@ -50,7 +50,7 @@
       ],
       "changelog": "changelogs/1.1.md"
     },
-        {
+    {
       "project-version": "v1.0",
       "variants": [
         {

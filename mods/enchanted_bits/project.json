@@ -1,0 +1,26 @@
+{
+  "name": "Enchanted Bits",
+  "author": "pixelalex13",
+  "description": "Improves aspects around the Enchanting System to make it slightly better.",
+  "icon": "icon.png",
+  "screenshots": [],
+  "categories": ["Game Mechanics", "Magic", "Utility"],
+  "environments": ["Client and Server"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.11"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "download": "https://drive.google.com/uc?export=download&id=18vnBLj84hXFzEolzACLJp7vefsq_Pc23"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}
