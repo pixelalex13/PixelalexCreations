@@ -1044,7 +1044,6 @@
             if (screenshotBtn) { screenshotBtn.addEventListener("click", e => { e.stopPropagation(); currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src })); currentScreenshotIndex = 0; updateModal(); openModal(); }); }
         }
 
-
         // --- MARKDOWN COLOR FUNCTION ---
         let COLOR_MAP = {};
 
