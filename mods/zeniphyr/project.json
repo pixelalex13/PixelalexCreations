@@ -1,6 +1,6 @@
 {
   "name": "Zeniphyr",
-  "author": "pixelalex13",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds small and lightweight additions that improve some aspects of the game.",
   "icon": "icon.png",
   "screenshots": [],

@@ -1,6 +1,6 @@
 {
   "name": "All and Everywhere is Music",
-  "author": "pixelalex13",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Lets every music play everywhere!",
   "icon": "icon.png",
   "screenshots": [

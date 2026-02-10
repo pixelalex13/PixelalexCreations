@@ -154,7 +154,7 @@
             background: #232323;
             border-radius: 14px;
             box-shadow: 0 6px 0 #000;
-            overflow: hidden;
+            overflow: visible;
             width: 100%;
             max-width: 900px;
         }
@@ -213,6 +213,98 @@
 
         .project-tags span[data-loader] {
             color: #fff;
+        }
+
+        .author {
+            position: relative;
+            display: inline-block;
+        }
+
+        .author::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 100%;
+            width: 220px;
+            height: 20px;
+        }
+
+        .author-popup {
+            position: absolute;
+            bottom: 140%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            z-index: 9999;
+            width: 120px;
+            padding: 10px;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .author:hover .author-popup,
+        .author-popup:hover {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .author-popup .avatar-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .author-popup .avatar-container img {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .discord-btn-small {
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #5865F2;
+            border: 2px solid #000;
+            box-shadow: 0 2px 0 #000;
+            margin-left: -14px;
+            cursor: pointer;
+            transition: transform 0.25s ease, filter 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .discord-btn-small::before {
+            content: "";
+            display: block;
+            width: 14px;
+            height: 14px;
+            background: url('../resources/images/discord-icon.png') no-repeat center/contain;
+        }
+
+        .discord-btn-small:hover {
+            transform: scale(1.1);
+            filter: brightness(1.15);
+        }
+
+        .author-popup .author-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .author-popup .role {
+            font-size: 12px;
+            color: #aaa;
         }
 
         .chevron {
@@ -660,6 +752,18 @@
             }
         }
 
+        // --- LOAD AUTHORS ---
+        let AUTHORS = {};
+
+        async function loadAuthors() {
+            try {
+                const res = await fetch("../resources/data/authors.json");
+                AUTHORS = await res.json();
+            } catch {
+                console.warn("No authors found");
+            }
+        }
+
         // --- FILTERS ---
         const allGameVersions = new Set();
         const allLoaders = new Set();
@@ -797,9 +901,10 @@
             return 0;
         }
 
-        loadProjectFilesList();
-
         function createProject(p) {
+            const authors = p.authors?.length
+                ? p.authors
+                : [{ name: p.author || "Unknown" }];
             const card = document.createElement("div");
             card.className = "project-card";
 
@@ -827,7 +932,17 @@
                 <div class="project-header">
                 <img src="${p.basePath + p.icon}" class="project-icon">
                 <div class="project-info">
-                <h3>${p.name} <span>by ${p.author}</span>${p.archived ? '<span class="archived-label">Archived</span>' : ''}</h3>
+                <h3>
+                ${p.name}
+                <span class="author-list">
+                    by ${authors.map(a => `
+                    <span class="author" data-author="${a.name}" data-role="${a.role || ""}">
+                        ${a.name}
+                    </span>
+                    `).join(", ")}
+                </span>
+                ${p.archived ? '<span class="archived-label">Archived</span>' : ''}
+                </h3>
                 <p>${p.description}</p>
                 <div class="project-tags">
                 ${tags.map(t => {
@@ -880,8 +995,42 @@
 
             normalGrid.appendChild(card);
 
+            card.querySelectorAll(".author").forEach(el => {
+                const name = el.dataset.author;
+                const roleOverride = el.dataset.role;
+
+                const data = AUTHORS[name];
+                if (!data) return;
+
+                const role = roleOverride || data.defaultRole || "Contributor";
+
+                const popup = document.createElement("div");
+                popup.className = "author-popup";
+                popup.innerHTML = `
+                <div class="avatar-container">
+                    <img src="${data.avatar}" alt="${name}">
+                    <a href="${data.discord}" target="_blank" class="discord-btn-small"></a>
+                </div>
+                <div>
+                    <span>${name}</span>
+                </div>
+                <div class="role">${role}</div>
+                `;
+
+
+
+                el.appendChild(popup);
+            });
+
             const header = card.querySelector(".project-header");
-            header.addEventListener("click", e => { if (e.target.classList.contains("header-screenshot-btn")) return; card.classList.toggle("open"); const versions = card.querySelector(".project-versions"); versions.style.maxHeight = card.classList.contains("open") ? versions.scrollHeight + "px" : "0"; });
+            header.addEventListener("click", e => {
+                if (e.target.closest(".author-popup")) return;
+                if (e.target.classList.contains("header-screenshot-btn")) return;
+
+                card.classList.toggle("open");
+                const versions = card.querySelector(".project-versions");
+                versions.style.maxHeight = card.classList.contains("open") ? versions.scrollHeight + "px" : "0";
+            });
 
             const screenshotBtn = card.querySelector(".header-screenshot-btn");
             if (screenshotBtn) { screenshotBtn.addEventListener("click", e => { e.stopPropagation(); currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src })); currentScreenshotIndex = 0; updateModal(); openModal(); }); }
@@ -930,7 +1079,7 @@
                 .map(line => `<p style="margin:8px 0">${line}</p>`)
                 .join("");
         }
-        
+
         // --- CHANGELOG ---
         document.addEventListener("click", e => {
             if (e.target.classList.contains("changelog-btn")) {
@@ -981,9 +1130,10 @@
         // --- FILTER ---
         function applyFilters() { const query = searchBox.value.toLowerCase(); document.querySelectorAll(".project-card").forEach(card => { const tags = card.dataset.tags.split(","); const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f)); const matchesSearch = !query || card.dataset.searchText.includes(query); let matchesArchived = true; if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false"; card.style.display = matchesFilters && matchesSearch && matchesArchived ? "block" : "none"; }); }
 
-        // --- Loader Colors ---
+        // --- LOADER ---
         async function init() {
             await loadLoaderColors();
+            await loadAuthors();
             loadProjectFilesList();
         }
         init();

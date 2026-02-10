@@ -1,6 +1,9 @@
 {
   "name": "Pixel Backrooms",
-  "author": "pixelalex13, PixelToni153",
+  "authors": [
+  { "name": "pixelalex13", "role": "Owner"},
+  { "name": "PixelToni153", "role": "Builder"}
+  ],
   "description": "One of the most Wiki accurate Backrooms mods!",
   "icon": "icon.png",
   "screenshots": [

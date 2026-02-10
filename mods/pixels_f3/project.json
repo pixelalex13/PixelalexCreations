@@ -1,6 +1,6 @@
 {
   "name": "Pixels F3",
-  "author": "pixelalex13",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds a small F3 like HUD overlay with only the important debug info.",
   "icon": "icon.png",
   "screenshots": [
