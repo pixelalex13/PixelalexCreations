@@ -247,8 +247,7 @@
             transition: opacity 0.18s ease, transform 0.18s ease;
         }
 
-        .author:hover .author-popup,
-        .author-popup:hover {
+        .author-popup.visible {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
             pointer-events: auto;
@@ -1029,6 +1028,19 @@
 
 
                 el.appendChild(popup);
+
+                let hoverTimeout;
+
+                el.addEventListener("mouseenter", () => {
+                    hoverTimeout = setTimeout(() => {
+                        popup.classList.add("visible");
+                    }, 200);
+                });
+
+                el.addEventListener("mouseleave", () => {
+                    clearTimeout(hoverTimeout);
+                    popup.classList.remove("visible");
+                });
             });
 
             const header = card.querySelector(".project-header");
