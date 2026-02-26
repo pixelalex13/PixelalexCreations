@@ -1,5 +1,6 @@
 {
   "name": "Pixels-Hypixel-Pack",
+  "web-id": "pixels-hypixel-pack",
   "authors": [{ "name": "pixelalex13", "role": "Creator"}],
   "description": "A pvp pack for Hypixel (especially Bedwars).",
   "icon": "icon.png",

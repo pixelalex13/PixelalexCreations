@@ -334,7 +334,7 @@
         }
 
         /* SCREENSHOT BUTTON */
-        .header-screenshot-btn {
+        .header-button {
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -615,7 +615,7 @@
                 font-size: 13px;
             }
 
-            .header-screenshot-btn {
+            .header-button {
                 width: 28px;
                 height: 28px;
             }
@@ -849,6 +849,7 @@
 
                 createAllProjects();
                 renderSortedFilters();
+                openFromHash();
 
             } catch (err) {
                 console.error(err);
@@ -914,6 +915,7 @@
                 : [{ name: p.author || "Unknown" }];
             const card = document.createElement("div");
             card.className = "project-card";
+            card.id = p["web-id"];
 
             const loaders = new Set();
             const gameVersions = new Set();
@@ -964,7 +966,7 @@
                 </div>
                 </div>
                 <div class="chevron-container">
-                ${p.screenshots?.length ? '<span class="header-screenshot-btn"></span>' : ''}
+                ${p.screenshots?.length ? '<span class="header-button"></span>' : ''}
                 <span class="chevron">›</span>
                 </div>
                 </div>
@@ -1034,7 +1036,7 @@
                 el.addEventListener("mouseenter", () => {
                     hoverTimeout = setTimeout(() => {
                         popup.classList.add("visible");
-                    }, 200);
+                    }, 300);
                 });
 
                 el.addEventListener("mouseleave", () => {
@@ -1046,14 +1048,20 @@
             const header = card.querySelector(".project-header");
             header.addEventListener("click", e => {
                 if (e.target.closest(".author-popup")) return;
-                if (e.target.classList.contains("header-screenshot-btn")) return;
+                if (e.target.classList.contains("header-button")) return;
 
                 card.classList.toggle("open");
+
+                if (card.classList.contains("open")) {
+                    history.replaceState(null, null, "#" + card.id);
+                } else {
+                    history.replaceState(null, null, window.location.pathname);
+                }
                 const versions = card.querySelector(".project-versions");
                 versions.style.maxHeight = card.classList.contains("open") ? versions.scrollHeight + "px" : "0";
             });
 
-            const screenshotBtn = card.querySelector(".header-screenshot-btn");
+            const screenshotBtn = card.querySelector(".header-button");
             if (screenshotBtn) { screenshotBtn.addEventListener("click", e => { e.stopPropagation(); currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src })); currentScreenshotIndex = 0; updateModal(); openModal(); }); }
         }
 
@@ -1137,16 +1145,85 @@
         const modal = document.getElementById("screenshotModal");
         const modalImg = document.getElementById("modalImage");
         const modalCaption = document.getElementById("modalCaption");
-        let currentScreenshots = []; let currentScreenshotIndex = 0;
+                let currentScreenshots = [];
+        let currentScreenshotIndex = 0;
 
-        function updateModal() { if (currentScreenshots.length === 0) return; const s = currentScreenshots[currentScreenshotIndex]; modalImg.src = s.src; modalCaption.textContent = s.caption || ""; }
+        function updateModal() {
+            if (currentScreenshots.length === 0) return;
 
-        function openModal() { modal.style.display = "flex"; modal.classList.remove("closing"); modal.classList.add("open"); }
-        function closeModal() { modal.classList.remove("open"); modal.classList.add("closing"); modal.addEventListener("animationend", function handler() { modal.style.display = "none"; modal.classList.remove("closing"); modal.removeEventListener("animationend", handler); }); }
+            const s = currentScreenshots[currentScreenshotIndex];
+            modalImg.src = s.src;
+            modalCaption.textContent = s.caption || "";
+
+            // Pfeile nur anzeigen, wenn mehr als ein Bild existiert
+            const prevBtn = document.getElementById("prevPic");
+            const nextBtn = document.getElementById("nextPic");
+
+            if (currentScreenshots.length > 1) {
+                prevBtn.style.display = "block";
+                nextBtn.style.display = "block";
+            } else {
+                prevBtn.style.display = "none";
+                nextBtn.style.display = "none";
+            }
+        }
+
+        function openModal() {
+            modal.style.display = "flex";
+            modal.classList.remove("closing");
+            modal.classList.add("open");
+        }
+
+        function closeModal() {
+            modal.classList.remove("open");
+            modal.classList.add("closing");
+            modal.addEventListener("animationend", function handler() {
+                modal.style.display = "none";
+                modal.classList.remove("closing");
+                modal.removeEventListener("animationend", handler);
+            });
+        }
 
         document.getElementById("closeModal").onclick = closeModal;
-        document.getElementById("prevPic").onclick = () => { if (currentScreenshots.length === 0) return; currentScreenshotIndex = (currentScreenshotIndex - 1 + currentScreenshots.length) % currentScreenshots.length; updateModal(); };
-        document.getElementById("nextPic").onclick = () => { if (currentScreenshots.length === 0) return; currentScreenshotIndex = (currentScreenshotIndex + 1) % currentScreenshots.length; updateModal(); };
+        document.getElementById("prevPic").onclick = () => {
+            if (currentScreenshots.length === 0) return;
+            currentScreenshotIndex = (currentScreenshotIndex - 1 + currentScreenshots.length) % currentScreenshots.length;
+            updateModal();
+        };
+        document.getElementById("nextPic").onclick = () => {
+            if (currentScreenshots.length === 0) return;
+            currentScreenshotIndex = (currentScreenshotIndex + 1) % currentScreenshots.length;
+            updateModal();
+        };
+
+        // --- KEYBOARD NAVIGATION ---
+        document.addEventListener("keydown", (e) => {
+            if (!modal.classList.contains("open")) return;
+
+            switch (e.key) {
+                case "ArrowLeft":
+                case "a":
+                case "A":
+                    currentScreenshotIndex = (currentScreenshotIndex - 1 + currentScreenshots.length) % currentScreenshots.length;
+                    updateModal();
+                    break;
+                case "ArrowRight":
+                case "d":
+                case "D":
+                    currentScreenshotIndex = (currentScreenshotIndex + 1) % currentScreenshots.length;
+                    updateModal();
+                    break;
+                case "Escape":
+                    closeModal();
+                    break;
+            }
+        });
+        
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
 
         // --- FILTER ---
         function applyFilters() { const query = searchBox.value.toLowerCase(); document.querySelectorAll(".project-card").forEach(card => { const tags = card.dataset.tags.split(","); const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f)); const matchesSearch = !query || card.dataset.searchText.includes(query); let matchesArchived = true; if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false"; card.style.display = matchesFilters && matchesSearch && matchesArchived ? "block" : "none"; }); }
@@ -1157,7 +1234,52 @@
             await loadAuthors();
             loadProjectFilesList();
         }
+
+        function openFromHash() {
+            const hash = window.location.hash.substring(1);
+
+            document.querySelectorAll(".project-card").forEach(card => {
+                card.classList.remove("open");
+                const versions = card.querySelector(".project-versions");
+                if (versions) versions.style.maxHeight = "0";
+            });
+
+            if (!hash) return;
+
+            const targetCard = document.getElementById(hash);
+            if (!targetCard) return;
+
+            targetCard.classList.add("open");
+            const versions = targetCard.querySelector(".project-versions");
+
+            if (versions) {
+                versions.style.maxHeight = versions.scrollHeight + "px";
+
+                const onTransitionEnd = () => {
+                    const header = targetCard.querySelector(".project-header");
+                    if (header) {
+                        header.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+                    versions.removeEventListener("transitionend", onTransitionEnd);
+                };
+                versions.addEventListener("transitionend", onTransitionEnd);
+            } else {
+                const header = targetCard.querySelector(".project-header");
+                if (header) {
+                    header.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
+            }
+        }
+
         init();
+
+        window.addEventListener("hashchange", openFromHash);
     </script>
 </body>
 

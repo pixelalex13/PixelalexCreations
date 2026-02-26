@@ -1,5 +1,6 @@
 {
   "name": "Enchanted Bits",
+  "web-id": "enchanted-bits",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Improves aspects around the Enchanting System to make it slightly better.",
   "icon": "icon.png",

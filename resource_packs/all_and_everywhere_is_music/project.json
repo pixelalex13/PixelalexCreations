@@ -1,5 +1,6 @@
 {
   "name": "All and Everywhere is Music",
+  "web-id": "all-and-everywhere-is-music",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Lets every music play everywhere!",
   "icon": "icon.png",

@@ -1,5 +1,6 @@
 {
   "name": "Embellishments",
+  "web-id": "embellishments",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds a number of embellishments that fit the vibe of the vanilla game.",
   "icon": "icon.png",
