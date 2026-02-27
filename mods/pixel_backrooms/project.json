@@ -1,6 +1,7 @@
 {
   "name": "Pixel Backrooms",
   "web-id": "pixel-backrooms",
+  "publish-date": "2024-07-31",
   "authors": [
   { "name": "pixelalex13", "role": "Owner"},
   { "name": "PixelToni153", "role": "Builder"}
@@ -23,6 +24,7 @@
           "game-version": ["1.20.1"],
           "loader": ["Forge"],
           "dependencies": [],
+          "upload-date": "2024-08-01",
           "download": "https://drive.google.com/uc?export=download&id=1x_2KFDmhkmMGiRV1sEsYb5_5sQuhgTxY"
         }
       ],
@@ -35,6 +37,7 @@
           "game-version": ["1.20.1"],
           "loader": ["Forge"],
           "dependencies": [],
+          "upload-date": "2024-07-31",
           "download": "https://drive.google.com/uc?export=download&id=1tSilcWabp7ci0yzsK5id0Hry-GI66xTU"
         }
       ],

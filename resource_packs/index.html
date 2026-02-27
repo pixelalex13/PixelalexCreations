@@ -122,6 +122,24 @@
             font-family: inherit;
         }
 
+        #sortContainer {
+            margin: 10px 0;
+            color: #fff;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        #sortContainer select {
+            padding: 4px 6px;
+            border-radius: 6px;
+            background: #333;
+            color: #fff;
+            border: none;
+            font-family: inherit;
+            margin-left: 3px;
+        }
+
         .filter-btn {
             background: #333;
             color: #fff;
@@ -391,6 +409,38 @@
             pointer-events: none;
             transition: opacity 0.2s ease, transform 0.2s ease;
             white-space: nowrap;
+        }
+
+        .new-publish-badge-icon {
+            position: absolute;
+            top: 2px;
+            left: -15px;
+            background: #ff41415e;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 8px;
+            text-shadow: 1px 1px 0 #000;
+            pointer-events: none;
+            z-index: 10;
+            rotate: -10deg;
+        }
+
+        .new-update-badge-icon {
+            position: absolute;
+            top: 2px;
+            left: -18px;
+            background: #ff67415e;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 6px;
+            text-shadow: 1px 1px 0 #000;
+            pointer-events: none;
+            z-index: 10;
+            rotate: -10deg;
         }
 
         /* VERSIONS */
@@ -761,6 +811,15 @@
     <div class="layout">
         <aside class="sidebar">
             <input id="searchBox" type="text" placeholder="Search resource packs...">
+            <div id="sortContainer">
+                Sort By:
+                <select id="sortSelect">
+                    <option value="name-asc">A-Z</option>
+                    <option value="name-desc">Z-A</option>
+                    <option value="publish-date">Date Published</option>
+                    <option value="update-date">Date Updated</option>
+                </select>
+            </div>
             <h3>Game Version</h3>
             <div id="gameVersionFilters"></div>
             <h3>Resolution</h3>
@@ -836,6 +895,77 @@
             });
         });
         const projectFilesData = {};
+
+        const sortSelect = document.getElementById("sortSelect");
+
+        sortSelect.addEventListener("change", () => {
+            sortAndRenderProjects();
+        });
+
+        function sortAndRenderProjects() {
+            const projects = Object.values(projectFilesData);
+
+            const sortValue = sortSelect.value;
+
+            projects.sort((a, b) => {
+                switch (sortValue) {
+                    case "name-asc":
+                        return a.name.localeCompare(b.name);
+                    case "name-desc":
+                        return b.name.localeCompare(a.name);
+                    case "publish-date": {
+                        const aDate = a["publish-date"] ? new Date(a["publish-date"]) : null;
+                        const bDate = b["publish-date"] ? new Date(b["publish-date"]) : null;
+
+                        if (!aDate && !bDate) return a.name.localeCompare(b.name);
+                        if (!aDate) return 1;
+                        if (!bDate) return -1;
+
+                        const diff = bDate - aDate;
+                        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+                    }
+                    case "update-date": {
+                        const aLatest = getLatestUploadDate(a);
+                        const bLatest = getLatestUploadDate(b);
+
+                        const aDate = aLatest ? new Date(aLatest) : null;
+                        const bDate = bLatest ? new Date(bLatest) : null;
+
+                        if (!aDate && !bDate) return a.name.localeCompare(b.name);
+                        if (!aDate) return 1;
+                        if (!bDate) return -1;
+
+                        const diff = bDate - aDate;
+                        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+                    }
+                    default:
+                        return 0;
+                }
+            });
+
+            normalGrid.innerHTML = "";
+            projects.forEach(p => createProject(p));
+            applyFilters();
+        }
+
+        function getLatestUploadDate(project) {
+            let latest = null;
+
+            project.versions?.forEach(version => {
+                version.variants?.forEach(variant => {
+                    if (!variant["upload-date"]) return;
+
+                    const date = new Date(variant["upload-date"]);
+
+                    if (!latest || date > latest) {
+                        latest = date;
+                    }
+                });
+            });
+
+            return latest;
+        }
+
         searchBox.addEventListener("input", applyFilters);
 
         function addFilterButton(container, value) {
@@ -869,6 +999,7 @@
                 }));
 
                 createAllProjects();
+                sortAndRenderProjects();
                 renderSortedFilters();
                 openFromHash();
 
@@ -890,11 +1021,7 @@
                 noProjects.hidden = true;
             }
 
-            allProjects.sort((a, b) => {
-                if (a.archived && !b.archived) return 1;
-                if (!a.archived && b.archived) return -1;
-                return a.name.localeCompare(b.name);
-            });
+            
 
             allProjects.forEach(p => createProject(p));
         }
@@ -945,6 +1072,34 @@
             card.className = "project-card";
             card.id = p["web-id"];
 
+            let badgeHTML = '';
+            const now = new Date();
+
+            if (p["publish-date"]) {
+                const publishDate = new Date(p["publish-date"]);
+                const diffPublishDays = (now - publishDate) / (1000 * 60 * 60 * 24);
+                if (diffPublishDays <= 3) {
+                    badgeHTML = '<span class="new-publish-badge-icon">New</span>';
+                }
+            }
+
+            if (!badgeHTML && p.versions?.length) {
+                const hasRecentUpdate = p.versions.some(version =>
+                    version.variants?.some(variant => {
+                        if (!variant["upload-date"]) return false;
+
+                        const uploadDate = new Date(variant["upload-date"]);
+                        const diffDays = (now - uploadDate) / (1000 * 60 * 60 * 24);
+
+                        return diffDays <= 3;
+                    })
+                );
+
+                if (hasRecentUpdate) {
+                    badgeHTML = '<span class="new-update-badge-icon">Update</span>';
+                }
+            }
+
             const resolutions = new Set();
             const gameVersions = new Set();
 
@@ -969,6 +1124,7 @@
             card.innerHTML = `
                 <div class="project-header">
                 <img src="${p.basePath + p.icon}" class="project-icon">
+                ${badgeHTML}
                 <div class="project-info">
                 <h3>
                 ${p.name}

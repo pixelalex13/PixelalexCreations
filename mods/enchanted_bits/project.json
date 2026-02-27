@@ -1,6 +1,7 @@
 {
   "name": "Enchanted Bits",
   "web-id": "enchanted-bits",
+  "publish-date": "2026-02-07",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Improves aspects around the Enchanting System to make it slightly better.",
   "icon": "icon.png",
@@ -18,6 +19,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2026-02-07",
           "download": "https://drive.google.com/uc?export=download&id=18vnBLj84hXFzEolzACLJp7vefsq_Pc23"
         }
       ],

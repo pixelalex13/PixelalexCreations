@@ -1,6 +1,7 @@
 {
   "name": "Embellishments",
   "web-id": "embellishments",
+  "publish-date": "2025-12-12",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds a number of embellishments that fit the vibe of the vanilla game.",
   "icon": "icon.png",
@@ -18,6 +19,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2026-01-20",
           "download": "https://drive.google.com/uc?export=download&id=1mYs42OdZgUJ2__KAc04EYA2ElDpaQysZ"
         }
       ],
@@ -32,6 +34,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-12-16",
           "download": "https://drive.google.com/uc?export=download&id=1yvr8TwAjwZktEGOqMwz8N3IOPQ7xnW-n"
         }
       ],
@@ -46,6 +49,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-12-13",
           "download": "https://drive.google.com/uc?export=download&id=1ZIHwb_khUO3npcQXcBzkhptthK4-Lagd"
         }
       ],
@@ -60,6 +64,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-12-12",
           "download": "https://drive.google.com/uc?export=download&id=1G5IFvKFM9S1D_fgiS2vSG6xtC97-P_s5"
         }
       ],

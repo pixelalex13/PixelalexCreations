@@ -1,6 +1,7 @@
 {
   "name": "Zeniphyr",
   "web-id": "zeniphyr",
+  "publish-date": "2025-09-12",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds small and lightweight additions that improve some aspects of the game.",
   "icon": "icon.png",
@@ -18,6 +19,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=1rQLuWQKYB3UKZ6qXeZl5Him4fhmIO0R7"
         },
         {
@@ -26,6 +28,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=1feaKXlpnlTUdqpEGXn2Hytdsex_-fZve"
         },
         {
@@ -34,6 +37,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=1VRmMQAZLwc3k6f1wpfPD_iOPzM050vUZ"
         }
       ],
@@ -48,6 +52,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=1xyfNVTHRIfbxoU_QDwump3FY25ym9NvH"
         },
         {
@@ -56,6 +61,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=141J9LNkxwtlONKHdOtCTCzCVSyd6hVZY"
         },
         {
@@ -64,6 +70,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-10-13",
           "download": "https://drive.google.com/uc?export=download&id=1A83pgaMdXPDFckbHEcNvBDt7yYSEB9Q0"
         }
       ],
@@ -80,6 +87,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-10-11",
           "download": "https://drive.google.com/uc?export=download&id=1gbViG0iH3Z71Rqaa6hCy8rqJVAoPBtdA"
         }
       ],
@@ -96,6 +104,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-16",
           "download": "https://drive.google.com/uc?export=download&id=1fIfW4-uu_NVNSPhpp3dWuyQC9_b-oRF5"
         }
       ],
@@ -112,6 +121,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-14",
           "download": "https://drive.google.com/uc?export=download&id=1VXI9RAv0Z8KNb5oYSn6kmqn_lkTgrUNo"
         }
       ],
@@ -128,6 +138,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-14",
           "download": "https://drive.google.com/uc?export=download&id=1bFNnJqw4e0Z37vT_a8bc77qjoCo_JqbY"
         }
       ],
@@ -144,6 +155,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-13",
           "download": "https://drive.google.com/uc?export=download&id=1XfhhqPgnBg_IeeaquO3Bzz2TgNdmB9w7"
         }
       ],
@@ -160,6 +172,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-13",
           "download": "https://drive.google.com/uc?export=download&id=1RY8fWijy5bCfNAjiDl9QYX9bW8MRZdmb"
         }
       ],
@@ -176,6 +189,7 @@
             {"name": "Variants-CIT","url": "https://modrinth.com/mod/variants-cit"},
             {"name": "Sinytra Connector (only NeoForge)","url": "https://modrinth.com/mod/connector"}
           ],
+          "upload-date": "2025-09-12",
           "download": "https://drive.google.com/uc?export=download&id=1Te_sJp-N260x-5YnJWR595UZM6rvXENT"
         }
       ],

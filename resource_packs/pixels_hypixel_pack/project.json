@@ -1,6 +1,7 @@
 {
   "name": "Pixels-Hypixel-Pack",
   "web-id": "pixels-hypixel-pack",
+  "publish-date": "2025-05-28",
   "authors": [{ "name": "pixelalex13", "role": "Creator"}],
   "description": "A pvp pack for Hypixel (especially Bedwars).",
   "icon": "icon.png",
@@ -16,6 +17,7 @@
           "game-version": ["1.8.9"],
           "resolution": ["16x"],
           "dependencies": [],
+          "upload-date": "2025-05-28",
           "download": "https://drive.google.com/uc?export=download&id=1DxSc4NUboKtObzU3f3svPnTSqUw9dUJl"
         }
       ],

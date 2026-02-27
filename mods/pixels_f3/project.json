@@ -1,6 +1,7 @@
 {
   "name": "Pixels F3",
   "web-id": "pixels-f3",
+  "publish-date": "2025-12-22",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
   "description": "Adds a small F3 like HUD overlay with only the important debug info.",
   "icon": "icon.png",
@@ -20,6 +21,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-12-27",
           "download": "https://drive.google.com/uc?export=download&id=1GNd3J4Vn71Wd3l9OHvYuQKj4kJ65B0kk"
         },
         {
@@ -28,6 +30,7 @@
           "dependencies": [
             {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
           ],
+          "upload-date": "2025-12-22",
           "download": "https://drive.google.com/uc?export=download&id=1UXNasdy_TKpOCDWdHRHUBVCSrilYwbyq"
         }
       ],

@@ -1,6 +1,7 @@
 {
   "name": "Pixels Skyblock",
   "web-id": "pixels-skyblock",
+  "publish-date": "2026-01-28",
   "author": "pixelalex13",
   "description": "A remake of the classic Skyblock, updated for newer versions, with custom advancements coming soon.",
   "icon": "icon.png",
@@ -14,6 +15,7 @@
         {
           "game-version": ["1.21.11", "1.21.10"],
           "dependencies": [],
+          "upload-date": "2026-01-28",
           "download": "https://drive.google.com/uc?export=download&id=1FkBSyO-q_MDa0gVGFs0bv0BLiNkYjeXi"
         }
       ],
