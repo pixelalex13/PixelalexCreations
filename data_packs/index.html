@@ -313,7 +313,7 @@
         }
 
         .project-card.open .chevron {
-                transform: translateY(40px) rotate(90deg);
+            transform: translateY(40px) rotate(90deg);
         }
 
         .chevron-container {
@@ -332,10 +332,11 @@
         }
 
         .header-buttons {
+            position: relative;
             margin-right: -25px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 1px;
         }
 
         .no-projects {
@@ -351,11 +352,45 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: url('../resources/images/buttons/Screenshot-Button.png') center/cover no-repeat;
             cursor: pointer;
             border: 2px solid transparent;
             margin-bottom: 6px;
             flex-shrink: 0;
+        }
+
+        .header-button.screenshot-btn {
+            background: url('../resources/images/buttons/Screenshot-Button.png') center/cover no-repeat;
+        }
+
+        .header-button.copy-btn {
+            background: url('../resources/images/buttons/Copy-Button.png') center/cover no-repeat;
+        }
+
+        .header-button.favorite-btn {
+            background: url('../resources/images/buttons/Favorite-Button.png') center/cover no-repeat;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .header-button.favorite-btn.active {
+            background: url('../resources/images/buttons/Filled-Favorite-Button.png') center/cover no-repeat;
+            filter: brightness(1.2);
+
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            background: #222;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
         }
 
         /* VERSIONS */
@@ -735,6 +770,10 @@
                 <button class="filter-btn" data-archived="true">✔</button>
                 <button class="filter-btn" data-archived="false">✖</button>
             </div>
+            <h3>Favorites</h3>
+            <div id="favoriteFilter">
+                <button class="filter-btn" id="onlyFavoritesBtn">Only Favorites</button>
+            </div>
         </aside>
         <main>
             <div class="project-grid" id="projectGrid"></div>
@@ -768,6 +807,14 @@
         const activeFilters = new Set();
         let archivedFilter = null;
         const searchBox = document.getElementById("searchBox");
+        const onlyFavoritesBtn = document.getElementById("onlyFavoritesBtn");
+        let filterFavorites = false;
+
+        onlyFavoritesBtn.addEventListener("click", () => {
+            filterFavorites = !filterFavorites;
+            onlyFavoritesBtn.classList.toggle("active", filterFavorites);
+            applyFilters();
+        });
         const normalGrid = document.getElementById("projectGrid");
 
         const gameVersionFilters = document.getElementById("gameVersionFilters");
@@ -912,8 +959,10 @@
                 </div>
                                 <div class="card-controls">
                     <div class="header-buttons">
-                        ${p.screenshots?.length ? '<span class="header-button"></span>' : ''}
-                    </div>
+                        ${p.screenshots?.length ? '<span class="header-button screenshot-btn"></span>' : ''}
+                        <span class="header-button copy-btn"></span>
+                        <span class="header-button favorite-btn"></span>
+                    </div> 
 
                     <div class="chevron-container">
                         <span class="chevron">›</span>
@@ -1010,8 +1059,70 @@
                 versions.style.maxHeight = card.classList.contains("open") ? versions.scrollHeight + "px" : "0";
             });
 
-            const screenshotBtn = card.querySelector(".header-button");
-            if (screenshotBtn) { screenshotBtn.addEventListener("click", e => { e.stopPropagation(); currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src })); currentScreenshotIndex = 0; updateModal(); openModal(); }); }
+            // Screenshot-Button
+            const screenshotBtn = card.querySelector(".screenshot-btn");
+            if (screenshotBtn) {
+                screenshotBtn.addEventListener("click", e => {
+                    e.stopPropagation();
+                    currentScreenshots = p.screenshots.map(s => ({ ...s, src: p.basePath + s.src }));
+                    currentScreenshotIndex = 0;
+                    updateModal();
+                    openModal();
+                });
+            }
+
+            // Copy-Button
+            const copyBtn = card.querySelector(".copy-btn");
+            if (copyBtn) {
+                const link = window.location.origin + window.location.pathname + "#" + p["web-id"];
+                copyBtn.style.position = "relative";
+                copyBtn.addEventListener("click", e => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText(link)
+                        .then(() => {
+                            const tooltip = document.createElement("div");
+                            tooltip.className = "copy-tooltip";
+                            tooltip.textContent = "Link copied!";
+                            copyBtn.appendChild(tooltip);
+
+                            requestAnimationFrame(() => {
+                                tooltip.style.opacity = "1";
+                                tooltip.style.transform = "translateX(-50%) translateY(-5px)";
+                            });
+
+                            setTimeout(() => {
+                                tooltip.style.opacity = "0";
+                                tooltip.style.transform = "translateX(-50%) translateY(-10px)";
+                                tooltip.addEventListener("transitionend", () => tooltip.remove());
+                            }, 1000);
+                        })
+                        .catch(() => console.warn("Copy failed!"));
+                });
+            }
+
+            // Favorite-Button
+            const favoriteBtn = card.querySelector(".favorite-btn");
+            if (favoriteBtn) {
+                
+                const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                if (favorites.includes(p["web-id"])) favoriteBtn.classList.add("active");
+
+                favoriteBtn.addEventListener("click", e => {
+                    e.stopPropagation(); 
+                    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+                    if (favorites.includes(p["web-id"])) {
+                        favorites = favorites.filter(id => id !== p["web-id"]);
+                        favoriteBtn.classList.remove("active");
+                    } else {
+                        favorites.push(p["web-id"]);
+                        favoriteBtn.classList.add("active");
+                    }
+
+                    localStorage.setItem("favorites", JSON.stringify(favorites));
+                    applyFilters();
+                });
+            }
         }
 
         // --- MARKDOWN COLOR FUNCTION ---
@@ -1094,7 +1205,7 @@
         const modal = document.getElementById("screenshotModal");
         const modalImg = document.getElementById("modalImage");
         const modalCaption = document.getElementById("modalCaption");
-                let currentScreenshots = [];
+        let currentScreenshots = [];
         let currentScreenshotIndex = 0;
 
         function updateModal() {
@@ -1104,7 +1215,7 @@
             modalImg.src = s.src;
             modalCaption.textContent = s.caption || "";
 
-            
+
             const prevBtn = document.getElementById("prevPic");
             const nextBtn = document.getElementById("nextPic");
 
@@ -1167,7 +1278,7 @@
                     break;
             }
         });
-        
+
         modal.addEventListener("click", (e) => {
             if (e.target === modal) {
                 closeModal();
@@ -1175,7 +1286,25 @@
         });
 
         // --- FILTER ---
-        function applyFilters() { const query = searchBox.value.toLowerCase(); document.querySelectorAll(".project-card").forEach(card => { const tags = card.dataset.tags.split(","); const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f)); const matchesSearch = !query || card.dataset.searchText.includes(query); let matchesArchived = true; if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false"; card.style.display = matchesFilters && matchesSearch && matchesArchived ? "block" : "none"; }); }
+        function applyFilters() {
+            const query = searchBox.value.toLowerCase();
+            document.querySelectorAll(".project-card").forEach(card => {
+                const tags = card.dataset.tags.split(",");
+                const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f));
+                const matchesSearch = !query || card.dataset.searchText.includes(query);
+                let matchesArchived = true;
+                if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false";
+
+                
+                let matchesFavorites = true;
+                if (filterFavorites) {
+                    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                    matchesFavorites = favorites.includes(card.id);
+                }
+
+                card.style.display = matchesFilters && matchesSearch && matchesArchived && matchesFavorites ? "block" : "none";
+            });
+        }
 
         // --- LOADER ---
         async function init() {
