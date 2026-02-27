@@ -307,18 +307,35 @@
             font-weight: 900;
             color: #aaa;
             margin-left: auto;
+            transform: translateY(40px);
             transition: transform 0.25s ease;
+            margin-right: 10px;
         }
 
         .project-card.open .chevron {
-            transform: rotate(90deg);
+                transform: translateY(40px) rotate(90deg);
         }
 
         .chevron-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            margin-left: 10px;
+        }
+
+        .card-controls {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-buttons {
+            margin-right: -25px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .no-projects {
@@ -329,7 +346,7 @@
             margin-top: 20px;
         }
 
-        /* SCREENSHOT BUTTON */
+        /* HEADER BUTTON */
         .header-button {
             width: 36px;
             height: 36px;
@@ -920,9 +937,14 @@
                 <p>${p.description}</p>
                 <div class="project-tags">${tags.map(t => `<span>${t}</span>`).join("")}</div>
                 </div>
-                <div class="chevron-container">
-                ${p.screenshots?.length ? '<span class="header-button"></span>' : ''}
-                <span class="chevron">›</span>
+                                <div class="card-controls">
+                    <div class="header-buttons">
+                        ${p.screenshots?.length ? '<span class="header-button"></span>' : ''}
+                    </div>
+
+                    <div class="chevron-container">
+                        <span class="chevron">›</span>
+                    </div>
                 </div>
                 </div>
                 <div class="project-versions">
@@ -1110,7 +1132,7 @@
             modalImg.src = s.src;
             modalCaption.textContent = s.caption || "";
 
-            // Pfeile nur anzeigen, wenn mehr als ein Bild existiert
+            
             const prevBtn = document.getElementById("prevPic");
             const nextBtn = document.getElementById("nextPic");
 
