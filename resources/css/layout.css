@@ -1,0 +1,61 @@
+.layout {
+    display: flex;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.sidebar {
+    width: 260px;
+    padding: 16px;
+}
+
+.sidebar h3 {
+    margin: 16px 0 6px;
+    font-size: 14px;
+}
+
+#searchBox {
+    width: 100%;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+#sortContainer {
+    margin: 10px 0;
+    color: #fff;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#sortContainer select {
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: #333;
+    color: #fff;
+    border: none;
+    font-family: inherit;
+    margin-left: 3px;
+}
+
+.filter-btn {
+    background: #333;
+    color: #fff;
+    border: 2px solid transparent;
+    padding: 5px 10px;
+    margin: 4px 4px 0 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.filter-btn.active {
+    border-color: #fff;
+}
+
+main {
+    flex: 1;
+}

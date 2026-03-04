@@ -1,0 +1,100 @@
+.project-versions {
+    max-height: 0;
+    overflow: hidden;
+    background: #1b1b1b;
+    border-top: 2px solid #000;
+    border-radius: 0 0 14px 14px;
+    transition: max-height 0.4s ease;
+    text-align: center;
+}
+
+.version-row {
+    display: grid;
+    grid-template-columns: 40px 80px 1fr;
+    gap: 12px;
+    padding: 16px 16px;
+    border-bottom: 1px solid #2a2a2a;
+    align-items: start;
+}
+
+.version-row>span:nth-child(2) {
+    margin-top: 7px;
+}
+
+.version-row a.dependency {
+    color: #a2a2a2;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.version-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.variant-row {
+    display: grid;
+    grid-template-columns: 140px 120px 1fr 120px;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+}
+
+.download-btn {
+    background: #56ff56;
+    color: #fff;
+    text-shadow: 0 0 0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.project-info h3 span.archived-label {
+    color: #ff4141a4;
+    margin-left: 10px;
+    text-shadow: 4px 4px 0 #000000a4;
+}
+
+.changelog-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: url('../images/buttons/Changelog-Button.png') center/cover no-repeat;
+    cursor: pointer;
+    margin-right: 6px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+}
+
+.changelog-btn.open {
+    border-color: #fff;
+}
+
+.changelog-box {
+    max-height: 0;
+    overflow: hidden;
+    background: #2a2a2a;
+    border-radius: 6px;
+    padding: 0 12px;
+    margin: 6px 0;
+    color: #fff;
+    white-space: pre-wrap;
+    font-size: 14px;
+    grid-column: 2 / -1;
+    transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+    text-align: start;
+    text-shadow: 2px 2px 0 #000;
+    word-spacing: 1px;
+}
+
+.changelog-box.open {
+    padding: 8px 12px;
+    margin: 6px 0;
+    border: 1px solid #fff;
+}

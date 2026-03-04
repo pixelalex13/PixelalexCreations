@@ -1,0 +1,285 @@
+.project-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.project-card {
+    background: #232323;
+    border-radius: 14px;
+    box-shadow: 0 6px 0 #000;
+    overflow: visible;
+    width: 100%;
+    max-width: 900px;
+}
+
+.project-header {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    cursor: pointer;
+    align-items: center;
+    position: relative;
+}
+
+.project-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+}
+
+.project-info {
+    flex: 1;
+}
+
+.project-info h3 {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.project-info h3 span {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.project-info p {
+    margin: 6px 0;
+    color: #ccc;
+    text-shadow: none;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.project-tags span {
+    background: #333;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.project-tags span[data-loader] {
+    color: #fff;
+}
+
+.author {
+    position: relative;
+    display: inline-block;
+}
+
+.author::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    width: 220px;
+    height: 20px;
+}
+
+.author-popup {
+    position: absolute;
+    bottom: 140%;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    z-index: 9999;
+    width: 120px;
+    padding: 10px;
+    background: #1e1e1e;
+    border: 1px solid #404040;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.author-popup.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.author-popup .avatar-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.author-popup .avatar-container img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: block;
+}
+
+.discord-btn-small {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #5865F2;
+    border: 2px solid #000;
+    box-shadow: 0 2px 0 #000;
+    margin-left: -14px;
+    cursor: pointer;
+    transition: transform 0.25s ease, filter 0.25s ease;
+    flex-shrink: 0;
+}
+
+.discord-btn-small::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: url('../images/discord-icon.png') no-repeat center/contain;
+}
+
+.discord-btn-small:hover {
+    transform: scale(1.1);
+    filter: brightness(1.15);
+}
+
+.author-popup .author-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.author-popup .role {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.chevron {
+    font-size: 30px;
+    font-weight: 900;
+    color: #aaa;
+    margin-left: auto;
+    transform: translateY(40px);
+    transition: transform 0.25s ease;
+    margin-right: 10px;
+}
+
+.project-card.open .chevron {
+    transform: translateY(40px) rotate(90deg);
+}
+
+.chevron-container {
+    display: flex;
+    align-items: center;
+}
+
+.card-controls {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-buttons {
+    position: relative;
+    margin-right: -25px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.no-projects {
+    width: 100%;
+    text-align: center;
+    font-size: 22.4px;
+    opacity: 0.6;
+    margin-top: 20px;
+}
+
+.header-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+}
+
+.header-button.screenshot-btn {
+    background: url('../images/buttons/Screenshot-Button.png') center/cover no-repeat;
+}
+
+.header-button.copy-btn {
+    background: url('../images/buttons/Copy-Button.png') center/cover no-repeat;
+}
+
+.header-button.favorite-btn {
+    background: url('../images/buttons/Favorite-Button.png') center/cover no-repeat;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.header-button.favorite-btn.active {
+    background: url('../images/buttons/Filled-Favorite-Button.png') center/cover no-repeat;
+    filter: brightness(1.2);
+
+}
+
+.copy-tooltip {
+    position: absolute;
+    background: #222;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.new-publish-badge-icon {
+    position: absolute;
+    top: 2px;
+    left: -15px;
+    background: #ff41415e;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 3px 6px;
+    border-radius: 8px;
+    text-shadow: 1px 1px 0 #000;
+    pointer-events: none;
+    z-index: 10;
+    rotate: -10deg;
+}
+
+.new-update-badge-icon {
+    position: absolute;
+    top: 2px;
+    left: -18px;
+    background: #ff67415e;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 6px;
+    border-radius: 6px;
+    text-shadow: 1px 1px 0 #000;
+    pointer-events: none;
+    z-index: 10;
+    rotate: -10deg;
+}

@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Minecraft";
+    src: url("../fonts/minecraft.ttf") format("truetype");
+}
+
+body {
+    background: #1e1e1e;
+    color: white;
+    font-family: "Minecraft", Arial, sans-serif;
+    margin: 0;
+    text-shadow: 4px 4px 0 #000;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
