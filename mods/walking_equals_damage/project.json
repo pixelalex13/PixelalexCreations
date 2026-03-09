@@ -1,0 +1,29 @@
+{
+  "name": "WalkingEqualsDamage",
+  "web-id": "walking-equals-damage",
+  "publish-date": "2026-03-09",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "description": "Every time you walk, you take damage.",
+  "icon": "icon.png",
+  "screenshots": [],
+  "categories": ["Game Mechanics", "Minigame"],
+  "environments": ["Server"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.11"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-03-09",
+          "download": "https://drive.google.com/uc?export=download&id=1LcRZXStM1xXS-h1TYE8XEAW1m32-no5a"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}
