@@ -1,0 +1,33 @@
+{
+  "name": "Spirit Scape",
+  "web-id": "spirit-scape",
+  "publish-date": "2026-04-04",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "description": "Step into a world where spirits remember what time has forgotten. Explore the Spirit Realm, uncover echoes of the past, and bring lost knowledge back into the present.",
+  "icon": "icon.png",
+  "screenshots": [
+    { "src": "screenshots/1.png", "caption": "Spirit Ore Vein" },
+    { "src": "screenshots/2.png", "caption": "Kill Vexes to get Spirit Plasma (Alpha Only)" },
+    { "src": "screenshots/3.png", "caption": "A new random World Event" }
+  ],
+  "categories": ["Adventure", "Equipment", "Magic"],
+  "environments": ["Client and Server"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "Alpha v1.0",
+      "variants": [
+        {
+          "game-version": ["1.21.11"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-04-04",
+          "download": "https://drive.google.com/uc?export=download&id=1mtxiQNwK8rOCJi5GIbSrcqVEeaJpCZF-"
+        }
+      ],
+      "changelog": "changelogs/alpha-1.0.md"
+    }
+  ]
+}
