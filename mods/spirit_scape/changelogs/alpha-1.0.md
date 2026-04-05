@@ -8,11 +8,11 @@
 
 **Spirit Plasma**
 - Is a new crafting material dropped by vexes
-[gray]This is exclusive to Alpha and will be changed in the Beta.[/]
+[gray]*This is exclusive to Alpha and will be changed in the Beta.*[/]
 
 **Soul**
 - Is a new crafting material dropped by soul sand, similar to gravel and flint
-[gray]This is a temporary solution and will be changed if there is a better solution for it.[/]
+[gray]*This is a temporary solution and will be changed if there is a better solution for it.*[/]
 
 **Soul Plasma Rod**
 - Is a new crafting material similar to sticks
@@ -20,9 +20,10 @@
 
 **Spirit Manifest**
 - Is a magical item used for getting items in Alpha and Beta development if there isn't a real way to obtain them
+- It has a small lore text in the tooltip
 - It can appear in a world event randomly every tick with a chance of 1 in 100,000
 - The world event is a rift opening up with loud sounds playing to indicate it has spawned around a player within a range of 30 blocks
-[gray]This is an item exclusive to Alpha and Beta and will probably become unobtainable during release.[/]
+[gray]*This is an item exclusive to Alpha and Beta and will probably become unobtainable during release.*[/]
 
 **Spirit Crystal Weapons & Tools**
 - The Spirit Crystal Weapons & Tools set features: Sword, Spear, Shovel, Pickaxe, Axe, and Hoe
@@ -34,6 +35,18 @@
 - These sets are similar to Netherite but do not have knockback resistance; as a trade-off, they have one more armor than Netherite
 - The player armor set is crafted as usual with Spirit Crystals
 - The Horse and Nautilus Armor are smithed in the Smithing Table with their diamond counterparts, Spirit Crystals, and the Spirit Manifest
+
+**Spirit Scape Item Group**
+- All items were added to this item group as well as to other fitting item groups
+
+**Tags**
+
+**Needs Spirit Crystal Tool Tag**
+- Added a needs_spirit_crystal_tool tag to use later in development
+
+**Needs Netherite Tool Tag**
+- Added a needs_netherite_tool tag to use later in development
+[gray]*This was added because vanilla Minecraft only has a needs_diamond_tool tag and below.*[/]
 
 ## Changes
 
