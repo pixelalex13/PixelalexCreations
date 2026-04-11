@@ -15,6 +15,30 @@
   "archived": false,
   "versions": [
     {
+      "project-version": "Alpha v1.1",
+      "variants": [
+        {
+          "game-version": ["26.1.2", "26.1.1", "26.1"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-04-11",
+          "download": "https://drive.google.com/uc?export=download&id=1jd1yuAekXnO6t2QB1r_ChFBCVBp-3quF"
+        },
+        {
+          "game-version": ["1.21.11"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-04-11",
+          "download": "https://drive.google.com/uc?export=download&id=1EoMYNrWJLXyE1EzHKx0z0-8fKeYXZRzx"
+        }
+      ],
+      "changelog": "changelogs/alpha-1.1.md"
+    },
+    {
       "project-version": "Alpha v1.0",
       "variants": [
         {
