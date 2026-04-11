@@ -8,7 +8,7 @@
   "screenshots": [],
   "categories": ["Decoration", "Game Mechanics", "Utility"],
   "environments": ["Client and Server"],
-  "archived": false,
+  "archived": true,
   "versions": [
     {
       "project-version": "v1.6",
