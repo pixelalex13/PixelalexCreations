@@ -162,6 +162,18 @@
     color: #aaa;
 }
 
+.contributor-list {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 4px;
+}
+
+.contributor {
+    margin-top: 1px;
+    font-size: 12px !important;
+}
+
 .chevron {
     font-size: 30px;
     font-weight: 900;

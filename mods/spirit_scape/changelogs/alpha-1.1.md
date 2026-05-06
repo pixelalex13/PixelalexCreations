@@ -9,9 +9,7 @@
 
 ## Changes
 
-**Event**
-
-**Dimensional Rift**
+**Dimensional Rift Event**
 - The "Spirit Manifest Spawn Event" has been renamed to "Dimensional Rift"
 - The rift now opens within a 24-block radius around the player instead of 30
 - The sounds of the rift have been made quieter

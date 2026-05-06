@@ -2,10 +2,8 @@
   "name": "Pixel Backrooms",
   "web-id": "pixel-backrooms",
   "publish-date": "2024-07-31",
-  "authors": [
-  { "name": "pixelalex13", "role": "Owner"},
-  { "name": "PixelToni153", "role": "Builder"}
-  ],
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "contributors": [{ "name": "PixelToni153", "role": "Builder"}],
   "description": "One of the most Wiki accurate Backrooms mods!",
   "icon": "icon.png",
   "screenshots": [

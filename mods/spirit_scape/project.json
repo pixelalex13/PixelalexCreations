@@ -3,17 +3,35 @@
   "web-id": "spirit-scape",
   "publish-date": "2026-04-04",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "contributors": [{ "name": "PixelToni153", "role": "Builder"}],
   "description": "Step into a world where spirits remember what time has forgotten. Explore the Spirit Realm, uncover echoes of the past, and bring lost knowledge back into the present.",
   "icon": "icon.png",
   "screenshots": [
     { "src": "screenshots/1.png", "caption": "Spirit Ore Vein" },
-    { "src": "screenshots/2.png", "caption": "Kill Vexes to get Spirit Plasma (Alpha Only)" },
-    { "src": "screenshots/3.png", "caption": "A new random World Event" }
+    { "src": "screenshots/2.png", "caption": "A new random World Event" },
+    { "src": "screenshots/3.png", "caption": "One of the new Graveyards" },
+    { "src": "screenshots/4.png", "caption": "The Gravedigger Villager with the Cleaning Station" },
+    { "src": "screenshots/5.png", "caption": "Urns within the Crypt" }
   ],
-  "categories": ["Adventure", "Equipment", "Magic"],
+  "categories": ["Adventure", "Decoration", "Equipment", "Magic", "Utility"],
   "environments": ["Client and Server"],
   "archived": false,
   "versions": [
+    {
+      "project-version": "Beta v1.0",
+      "variants": [
+        {
+          "game-version": ["26.1.2", "26.1.1", "26.1"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-05-06",
+          "download": "https://drive.google.com/uc?export=download&id=11Ytxs4103ndBZ5NR_jaMoBy-erT927CE"
+        }
+      ],
+      "changelog": "changelogs/beta-1.0.md"
+    },
     {
       "project-version": "Alpha v1.1",
       "variants": [

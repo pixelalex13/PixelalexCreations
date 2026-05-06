@@ -1,0 +1,29 @@
+{
+  "name": "Pixels Sprinting Key",
+  "web-id": "pixels-sprinting-key",
+  "publish-date": "2026-05-06",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "description": "A small mod that adds a Sprinting Keybind to older versions.",
+  "icon": "icon.png",
+    "screenshots": [
+    { "src": "screenshots/1.png", "caption": "Controls" }
+  ],
+  "categories": ["Game Mechanics", "Utility"],
+  "environments": ["Client"],
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["1.0.0"],
+          "loader": ["Java Agent"],
+          "dependencies": [],
+          "upload-date": "2026-05-06",
+          "download": "https://drive.google.com/uc?export=download&id=19XKZJbe3zn9rfUV1wmV4pag5wohDIaMG"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}

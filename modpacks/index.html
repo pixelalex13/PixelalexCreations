@@ -418,6 +418,14 @@
                     </span>
                     `).join(", ")}
                 </span>
+                ${p.contributors?.length ? `
+                <span class="contributor-list">
+                <span style="margin-right: 5px;">|</span> ${p.contributors.map(c => `
+                <span class="author contributor" data-author="${c.name}" data-role="${c.role || ''}">
+                    ${c.name}
+                </span>
+                `).join('<span class="contributor">, </span>')}
+                </span>` : ''}
                 ${p.archived ? '<span class="archived-label">Archived</span>' : ''}
                 </h3>
                 <p>${p.description}</p>
