@@ -11,12 +11,28 @@
     { "src": "screenshots/2.png", "caption": "A new random World Event" },
     { "src": "screenshots/3.png", "caption": "One of the new Graveyards" },
     { "src": "screenshots/4.png", "caption": "The Gravedigger Villager with the Cleaning Station" },
-    { "src": "screenshots/5.png", "caption": "Urns within the Crypt" }
+    { "src": "screenshots/5.png", "caption": "Urns within the Crypt" },
+    { "src": "screenshots/6.png", "caption": "New Spirit Crystal Armor Trim Material" }
   ],
   "categories": ["Adventure", "Decoration", "Equipment", "Magic", "Utility"],
   "environments": ["Client and Server"],
   "archived": false,
   "versions": [
+    {
+      "project-version": "Beta v1.1",
+      "variants": [
+        {
+          "game-version": ["26.1.2", "26.1.1", "26.1"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-05-08",
+          "download": "https://drive.google.com/uc?export=download&id=1DbxLNE2ggDVCOVHsk6orlptnhhooUeMW"
+        }
+      ],
+      "changelog": "changelogs/beta-1.1.md"
+    },
     {
       "project-version": "Beta v1.0",
       "variants": [
