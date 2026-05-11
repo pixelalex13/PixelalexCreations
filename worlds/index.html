@@ -392,7 +392,7 @@
 
                     <div class="version-variants">
                         ${v.variants.map(va => `
-                        <div class="variant-row">
+                        <div class="variant-row no-loader">
                             <span>${va["game-version"].join(", ")}</span>
                             <span>
                             ${Array.isArray(va.dependencies) && va.dependencies.length > 0
