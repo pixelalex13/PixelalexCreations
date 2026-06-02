@@ -3,12 +3,34 @@
   "web-id": "pixels-skyblock",
   "publish-date": "2026-01-28",
   "author": "pixelalex13",
-  "description": "A remake of the classic Skyblock, updated for newer versions, with custom advancements coming soon.",
+  "description": "A remake of the classic Skyblock, updated for newer versions and with over 50 custom advancements.",
   "icon": "icon.png",
-  "screenshots": [],
-  "categories": ["Adventure", "Survival"],
+  "screenshots": [
+    { "src": "screenshots/1.png", "caption": "Custom Advancements" }
+  ],
+  "categories": ["Adventure", "Challenging", "Survival"],
   "archived": false,
   "versions": [
+    {
+      "project-version": "v2.0",
+      "variants": [
+        {
+          "game-version": ["26.1.2", "26.1.1", "26.1"],
+          "dependencies": [],
+          "upload-date": "2026-06-02",
+          "download": "https://drive.google.com/uc?export=download&id=1Ud1GDQ3DE9wwAhYe3WDgkuNNFPDUrbm2"
+        },
+        {
+          "game-version": ["26.1.2", "26.1.1", "26.1"],
+          "dependencies": [
+            {"name": "Hardcore","url": "https://minecraft.wiki/w/Hardcore"}
+          ],
+          "upload-date": "2026-06-02",
+          "download": "https://drive.google.com/uc?export=download&id=15IQthF87VkCZGNi1OWTAk4YfpiWUjGvj"
+        }
+      ],
+      "changelog": "changelogs/2.0.md"
+    },
     {
       "project-version": "v1.0",
       "variants": [
@@ -17,6 +39,14 @@
           "dependencies": [],
           "upload-date": "2026-01-28",
           "download": "https://drive.google.com/uc?export=download&id=1FkBSyO-q_MDa0gVGFs0bv0BLiNkYjeXi"
+        },
+        {
+          "game-version": ["1.21.11", "1.21.10"],
+          "dependencies": [
+            {"name": "Hardcore","url": "https://minecraft.wiki/w/Hardcore"}
+          ],
+          "upload-date": "2026-01-28",
+          "download": "https://drive.google.com/uc?export=download&id=1VxqR3ZLeHziEniunMuQkvAFb5cUHGpZn"
         }
       ],
       "changelog": "changelogs/1.0.md"
