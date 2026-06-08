@@ -1,0 +1,71 @@
+.creator-list {
+    justify-content: center;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.creator-card {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 16px;
+    min-width: 200px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.creator-card img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.creator-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.creator-name {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.creator-role {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.discord-btn-small {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #5865F2;
+    border: 2px solid #000;
+    box-shadow: 0 2px 0 #000;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: transform 0.25s ease, filter 0.25s ease;
+    flex-shrink: 0;
+}
+
+.discord-btn-small::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 28px;
+    background: url('../images/discord-icon.png') no-repeat center/contain;
+}
+
+.discord-btn-small:hover {
+    transform: scale(1.1);
+    filter: brightness(1.15);
+}

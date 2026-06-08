@@ -11,6 +11,9 @@
     <!-- Base Style -->
     <link rel="stylesheet" href="../resources/css/base.css">
 
+    <!-- Creator List -->
+    <link rel="stylesheet" href="../resources/css/creator_list.css">
+
     <!-- Main Style -->
     <link rel="stylesheet" href="../resources/css/main.css">
 
@@ -26,7 +29,7 @@
 
     <header class="navbar">
         <div class="nav-left">
-            <a href="/">
+            <a href="/" class="nav-home">
                 <img src="resources/images/pixelalex_creations-logo.png" alt="Pixelalex Creations" class="nav-logo">
             </a>
             <nav class="nav-links">
@@ -48,7 +51,7 @@
     </header>
 
     <h1>Pixelalex Creations</h1>
-    <p>Here you will find all my creations that I have created over the years.</p>
+    <p>Here you will find all the creations that I and my friends have created over the years.</p>
 
     <div class="button-grid">
         <a href="mods/" class="button">Mods</a>
@@ -60,7 +63,12 @@
         <a href="worlds/" class="button">Worlds</a>
     </div>
 
-    <h2>Installation-Tutorials (Coming soon)</h2>
+    <h2>Creators</h2>
+    <div class="creator-list" id="creatorList"></div>
+
+    <div class="cs">
+        <h2>Installation-Tutorials (Coming soon)</h2>
+    </div>
     <!-- 
     <div class="video-container">
         <div class="video-wrapper">
@@ -86,6 +94,33 @@
         </div>
     </div> 
     -->
+
+    <script src="../resources/js/navbar.js"></script>
+
+    <script>
+        fetch("resources/data/authors.json")
+            .then(res => res.json())
+            .then(authors => {
+                const container = document.getElementById("creatorList");
+
+                Object.entries(authors).forEach(([name, data]) => {
+                    const role = data.mainRole || data.defaultRole || "Contributor";
+
+                    const card = document.createElement("div");
+                    card.className = "creator-card";
+                    card.innerHTML = `
+                    <img src="${data.avatar}" alt="${name}">
+                    <div class="creator-info">
+                        <span class="creator-name">${name}</span>
+                        <span class="creator-role">${role}</span>
+                    </div>
+                    <a href="${data.discord}" target="_blank" class="discord-btn-small"></a>
+                `;
+                    container.appendChild(card);
+                });
+            });
+    </script>
+
 </body>
 
 </html>
