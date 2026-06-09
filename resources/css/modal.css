@@ -63,6 +63,13 @@
     text-align: center;
 }
 
+#modalIframe {
+    width: 860px;
+    height: 480px;
+    border: none;
+    border-radius: 8px;
+}
+
 .screenshot-modal .close-btn {
     position: absolute;
     top: 20px;
@@ -71,6 +78,7 @@
     color: #fff;
     cursor: pointer;
     font-weight: bold;
+    padding: 16px 20px;
 }
 
 .screenshot-modal .nav-btn {
@@ -81,6 +89,7 @@
     cursor: pointer;
     font-weight: bold;
     user-select: none;
+    padding: 20px 24px;
     transform: translateY(-50%);
 }
 

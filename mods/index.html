@@ -394,7 +394,7 @@
                 });
             });
 
-            const tags = [...loaders, ...p.categories, ...p.environments];
+            const tags = [...loaders, ...p.environments, ...p.categories];
 
             card.dataset.tags = [...tags, ...gameVersions].join(",");
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
@@ -405,9 +405,45 @@
             p.environments.forEach(e => allEnvironments.add(e));
             gameVersions.forEach(gv => allGameVersions.add(gv));
 
+            const MAX_TAGS = 5;
+            const visibleTags = tags.slice(0, MAX_TAGS);
+            const hiddenTags = tags.slice(MAX_TAGS);
+
+            function renderTagSpan(t) {
+                const color = loaders.has(t) ? loaderColors[t] || '#fff' : '#fff';
+                const border = loaders.has(t) ? `1px solid ${color}` : 'none';
+                return `<span style="color:${color}; border:${border};">${t}</span>`;
+            }
+
+            const overflowHTML = hiddenTags.length > 0 ? `
+            <span class="tags-overflow-btn">+${hiddenTags.length}
+                <div class="tags-overflow-popup">
+                    ${hiddenTags.map(t => renderTagSpan(t)).join('')}
+                </div>
+            </span>` : '';
+
+            const tagsHTML = `
+            <div class="project-tags">
+                ${visibleTags.map(t => renderTagSpan(t)).join('')}
+                ${overflowHTML}
+            </div>`;
+
+            const lastUpdate = getLatestUploadDate(p);
+            const publishDate = p["publish-date"] ? new Date(p["publish-date"]).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : null;
+            const lastUpdateFormatted = lastUpdate ? new Date(lastUpdate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : null;
+
+            const datesHTML = `
+            <div class="project-dates">
+                ${publishDate ? `<span class="project-date">📅 ${publishDate}</span>` : ""}
+                ${lastUpdateFormatted ? `<span class="project-date">🔄 ${lastUpdateFormatted}</span>` : ""}
+            </div>`;
+
             card.innerHTML = `
                 <div class="project-header">
+                <div class="project-icon-container">
                 <img src="${p.basePath + p.icon}" class="project-icon">
+                ${datesHTML}
+                </div>
                 ${badgeHTML}
                 <div class="project-info">
                 <h3>
@@ -430,24 +466,14 @@
                 ${p.archived ? '<span class="archived-label">Archived</span>' : ''}
                 </h3>
                 <p>${p.description}</p>
-                <div class="project-tags">
-                ${tags.map(t => {
-                const color = allLoaders.has(t) ? loaderColors[t] || '#fff' : '#fff';
-                const border = allLoaders.has(t) ? `1px solid ${color}` : 'none';
-                return `<span style="
-                color: ${color}; 
-                border: ${border};
-                ">${t}</span>`;
-            }).join('')}
-                </div>
+                ${tagsHTML}
                 </div>
                 <div class="card-controls">
                     <div class="header-buttons">
-                        ${p.screenshots?.length ? '<span class="header-button screenshot-btn"></span>' : ''}
-                        <span class="header-button copy-btn"></span>
-                        <span class="header-button favorite-btn"></span>
+                        ${p.screenshots?.length ? '<span class="header-button screenshot-btn" data-tooltip="Screenshots"></span>' : ''}
+                        <span class="header-button copy-btn" data-tooltip="Copy Link"></span>
+                        <span class="header-button favorite-btn" data-tooltip="Favorite"></span>
                     </div> 
-
                     <div class="chevron-container">
                         <span class="chevron">›</span>
                     </div>
@@ -456,7 +482,7 @@
                 <div class="project-versions">
                 ${p.versions.map((v, i) => `
                 <div class="version-row">
-                    <span class="changelog-btn" data-index="${i}"></span>
+                    <span class="changelog-btn" data-index="${i}" data-tooltip="Changelog"></span>
                     <span>${v["project-version"]}</span>
 
                     <div class="version-variants">
@@ -472,6 +498,7 @@
                         .join(", ")}`
                     : "—"}
                             </span>
+                            <span>${va["upload-date"] ? new Date(va["upload-date"]).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}</span>
                             <a class="download-btn" href="${va.download}" target="_blank">Download</a>
                         </div>
                         `).join("")}
@@ -487,6 +514,38 @@
                 </div>`;
 
             normalGrid.appendChild(card);
+
+            card.querySelectorAll("[data-tooltip]").forEach(el => {
+                const tooltip = document.createElement("div");
+                tooltip.className = "custom-tooltip";
+                tooltip.textContent = el.dataset.tooltip;
+                document.body.appendChild(tooltip);
+
+                let tooltipTimeout;
+                let lastX = 0;
+                let lastY = 0;
+
+                const trackMove = (e) => {
+                    lastX = e.pageX;
+                    lastY = e.pageY;
+                };
+
+                el.addEventListener("mouseenter", () => {
+                    el.addEventListener("mousemove", trackMove);
+                    tooltipTimeout = setTimeout(() => {
+                        el.removeEventListener("mousemove", trackMove);
+                        tooltip.style.left = (lastX + 12) + "px";
+                        tooltip.style.top = (lastY + 12) + "px";
+                        tooltip.classList.add("visible");
+                    }, 300);
+                });
+
+                el.addEventListener("mouseleave", () => {
+                    clearTimeout(tooltipTimeout);
+                    el.removeEventListener("mousemove", trackMove);
+                    tooltip.classList.remove("visible");
+                });
+            });
 
             card.querySelectorAll(".author").forEach(el => {
                 const name = el.dataset.author;
@@ -529,6 +588,7 @@
             const header = card.querySelector(".project-header");
             header.addEventListener("click", e => {
                 if (e.target.closest(".author-popup")) return;
+                if (e.target.closest(".tags-overflow-btn")) return;
                 if (e.target.classList.contains("header-button")) return;
 
                 card.classList.toggle("open");
@@ -695,13 +755,33 @@
             if (currentScreenshots.length === 0) return;
 
             const s = currentScreenshots[currentScreenshotIndex];
-            modalImg.src = s.src;
             modalCaption.textContent = s.caption || "";
 
+            if (s.ytv) {
+                let videoId = null;
+                const match = s.ytv.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/);
+                if (match) videoId = match[1];
+
+                modalImg.style.display = "none";
+                let iframe = document.getElementById("modalIframe");
+                if (!iframe) {
+                    iframe = document.createElement("iframe");
+                    iframe.id = "modalIframe";
+                    iframe.setAttribute("allowfullscreen", "");
+                    iframe.setAttribute("allow", "autoplay; encrypted-media");
+                    modalImg.parentNode.insertBefore(iframe, modalImg.nextSibling);
+                }
+                iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}`;
+                iframe.style.display = "block";
+            } else {
+                modalImg.src = s.src;
+                modalImg.style.display = "block";
+                let iframe = document.getElementById("modalIframe");
+                if (iframe) { iframe.style.display = "none"; iframe.src = ""; }
+            }
 
             const prevBtn = document.getElementById("prevPic");
             const nextBtn = document.getElementById("nextPic");
-
             if (currentScreenshots.length > 1) {
                 prevBtn.style.display = "block";
                 nextBtn.style.display = "block";
@@ -715,11 +795,20 @@
             modal.style.display = "flex";
             modal.classList.remove("closing");
             modal.classList.add("open");
+
+            currentScreenshots.forEach(s => {
+                if (s.src) {
+                    const img = new Image();
+                    img.src = s.src;
+                }
+            });
         }
 
         function closeModal() {
             modal.classList.remove("open");
             modal.classList.add("closing");
+            const iframe = document.getElementById("modalIframe");
+            if (iframe) { iframe.src = ""; }
             modal.addEventListener("animationend", function handler() {
                 modal.style.display = "none";
                 modal.classList.remove("closing");
