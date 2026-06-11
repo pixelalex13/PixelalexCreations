@@ -175,12 +175,17 @@
 }
 
 .author-popup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
     position: absolute;
     bottom: 140%;
     left: 50%;
     transform: translateX(-50%) translateY(6px);
     z-index: 9999;
-    width: 120px;
+    width: max-content;
+    max-width: 260px;
     padding: 10px;
     background: #1e1e1e;
     border: 1px solid #404040;
@@ -209,6 +214,11 @@
     height: 46px;
     border-radius: 50%;
     display: block;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .discord-btn-small {

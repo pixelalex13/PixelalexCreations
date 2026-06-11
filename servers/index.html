@@ -29,6 +29,9 @@
     <!-- Responsive -->
     <link rel="stylesheet" href="../resources/css/outdated_responsive.css">
 
+    <!-- Server Page -->
+     <link rel="stylesheet" href="../resources/css/server_page.css">
+
 </head>
 
 <body>
@@ -58,15 +61,15 @@
 
     <script src="../resources/js/navbar.js"></script>
 
-    <h1>Modpacks</h1>
+    <h1>Servers</h1>
     <div id="noProjects" class="no-projects" hidden>
-        No modpacks available at the moment.
+        No servers available at the moment.
     </div>
 
     <!-- FILTER -->
     <div class="layout">
         <aside class="sidebar">
-            <input id="searchBox" type="text" placeholder="Search modpacks...">
+            <input id="searchBox" type="text" placeholder="Search servers...">
             <div id="sortContainer">
                 Sort By:
                 <select id="sortSelect">
@@ -78,13 +81,28 @@
             </div>
             <h3>Game Version</h3>
             <div id="gameVersionFilters"></div>
+            <h3>Edition</h3>
+            <div id="editionFilters"></div>
             <h3>Loader</h3>
             <div id="loaderFilters"></div>
-            <h3>Categories</h3>
-            <div id="categoryFilters"></div>
-            <h3>Environment</h3>
-            <div id="environmentFilters"></div>
-            <h3>Archived Modpacks</h3>
+            <h3>Features</h3>
+            <div id="featureFilters"></div>
+            <h3>Gameplay</h3>
+            <div id="gameplayFilters"></div>
+            <h3>Meta</h3>
+            <div id="metaFilters"></div>
+            <h3>Community</h3>
+            <div id="communityFilters"></div>
+            <h3>Region</h3>
+            <div id="regionFilters"></div>
+            <h3>Language</h3>
+            <div id="languageFilters"></div>
+            <h3>Status</h3>
+            <div id="statusFilters">
+                <button class="filter-btn" data-status="online">Online</button>
+                <button class="filter-btn" data-status="offline">Offline</button>
+            </div>
+            <h3>Archived Servers</h3>
             <div id="archivedFilter">
                 <button class="filter-btn" data-archived="true">✔</button>
                 <button class="filter-btn" data-archived="false">✖</button>
@@ -109,6 +127,17 @@
     </div>
 
     <script>
+        // --- LOAD EDITION COLORS ---
+        let editionColors = {};
+        async function loadEditionColors() {
+            try {
+                const res = await fetch('edition_colors.json');
+                editionColors = await res.json();
+            } catch {
+                console.warn('No edition colors found');
+            }
+        }
+        
         // --- LOAD LOADER COLORS ---
         let loaderColors = {};
         async function loadLoaderColors() {
@@ -122,7 +151,6 @@
 
         // --- LOAD AUTHORS ---
         let AUTHORS = {};
-
         async function loadAuthors() {
             try {
                 const res = await fetch("../resources/data/authors.json");
@@ -134,11 +162,17 @@
 
         // --- FILTERS ---
         const allGameVersions = new Set();
+        const allEditions = new Set();
         const allLoaders = new Set();
-        const allCategories = new Set();
-        const allEnvironments = new Set();
+        const allFeatures = new Set();
+        const allGameplay = new Set();
+        const allMeta = new Set();
+        const allCommunity = new Set();
+        const allRegion = new Set();
+        const allLanguage = new Set();
         const activeFilters = new Set();
         let archivedFilter = null;
+        let statusFilter = null;
         const searchBox = document.getElementById("searchBox");
         const onlyFavoritesBtn = document.getElementById("onlyFavoritesBtn");
         let filterFavorites = false;
@@ -151,9 +185,14 @@
         const normalGrid = document.getElementById("projectGrid");
 
         const gameVersionFilters = document.getElementById("gameVersionFilters");
+        const editionFilters = document.getElementById("editionFilters");
         const loaderFilters = document.getElementById("loaderFilters");
-        const categoryFilters = document.getElementById("categoryFilters");
-        const environmentFilters = document.getElementById("environmentFilters");
+        const featureFilters = document.getElementById("featureFilters");
+        const gameplayFilters = document.getElementById("gameplayFilters");
+        const metaFilters = document.getElementById("metaFilters");
+        const communityFilters = document.getElementById("communityFilters");
+        const regionFilters = document.getElementById("regionFilters");
+        const languageFilters = document.getElementById("languageFilters");
 
         document.querySelectorAll("#archivedFilter .filter-btn").forEach(btn => {
             btn.addEventListener("click", () => {
@@ -162,6 +201,16 @@
                 applyFilters();
             });
         });
+
+        // Status filter
+        document.querySelectorAll("#statusFilters .filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (btn.classList.contains("active")) { btn.classList.remove("active"); statusFilter = null; }
+                else { document.querySelectorAll("#statusFilters .filter-btn").forEach(b => b.classList.remove("active")); btn.classList.add("active"); statusFilter = btn.dataset.status; }
+                applyFilters();
+            });
+        });
+
         const projectFilesData = {};
 
         const sortSelect = document.getElementById("sortSelect");
@@ -237,44 +286,42 @@
         searchBox.addEventListener("input", applyFilters);
 
         function addFilterButton(container, value) {
+            if (!container) return;
             if ([...container.children].some(b => b.dataset.filter === value)) return;
             const btn = document.createElement("button");
             btn.className = "filter-btn";
             btn.dataset.filter = value;
             btn.textContent = value;
-            const originalColor = loaderColors[value];
-            if (loaderColors[value]) {
-                btn.style.color = loaderColors[value];
-                btn.style.borderColor = loaderColors[value];
-            }
             btn.onclick = () => {
                 btn.classList.toggle("active");
                 activeFilters.has(value) ? activeFilters.delete(value) : activeFilters.add(value);
-                if (btn.classList.contains("active") && originalColor) {
-                    btn.style.borderColor = lightenColor(originalColor, 60);
-                } else if (originalColor) {
-                    btn.style.borderColor = originalColor;
-                }
                 applyFilters();
             }
             container.appendChild(btn);
         }
 
-        // --- LIGHTEN COLOR FOR FILTER ---
-        function lightenColor(hex, percent) {
-            hex = hex.replace(/^#/, '');
-            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+        const localeSort = (a, b) => a.localeCompare(b, undefined, { sensitivity: "base" });
 
-            const num = parseInt(hex, 16);
-            let r = (num >> 16) + percent;
-            let g = ((num >> 8) & 0x00FF) + percent;
-            let b = (num & 0x0000FF) + percent;
+        // --- SERVER STATUS ---
+        const serverStatusCache = {};
+        function fetchServerStatus(address, bedrock) {
+            const key = (bedrock ? "be:" : "je:") + address;
+            if (serverStatusCache[key]) return serverStatusCache[key];
 
-            r = r > 255 ? 255 : r;
-            g = g > 255 ? 255 : g;
-            b = b > 255 ? 255 : b;
+            const base = bedrock
+                ? "https://api.mcsrvstat.us/bedrock/3/"
+                : "https://api.mcsrvstat.us/3/";
 
-            return `#${(r.toString(16).padStart(2, '0'))}${(g.toString(16).padStart(2, '0'))}${(b.toString(16).padStart(2, '0'))}`;
+            const promise = fetch(base + encodeURIComponent(address))
+                .then(res => { if (!res.ok) throw new Error("status " + res.status); return res.json(); })
+                .then(data => ({
+                    online: !!data.online,
+                    players: { online: data.players?.online ?? 0, max: data.players?.max ?? 0 }
+                }))
+                .catch(() => ({ online: false, players: { online: 0, max: 0 } }));
+
+            serverStatusCache[key] = promise;
+            return promise;
         }
 
         // --- LOAD PROJECTS FROM PROJECT LIST ---
@@ -316,27 +363,23 @@
                 noProjects.hidden = true;
             }
 
-
-
             allProjects.forEach(p => createProject(p));
         }
+
         // --- SORT FILTER ---
         function renderSortedFilters() {
             [...allGameVersions]
                 .sort(compareVersionsDesc)
                 .forEach(v => addFilterButton(gameVersionFilters, v));
 
-            [...allLoaders]
-                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
-                .forEach(l => addFilterButton(loaderFilters, l));
-
-            [...allCategories]
-                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
-                .forEach(c => addFilterButton(categoryFilters, c));
-
-            [...allEnvironments]
-                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
-                .forEach(e => addFilterButton(environmentFilters, e));
+            [...allEditions].sort(localeSort).forEach(e => addFilterButton(editionFilters, e));
+            [...allLoaders].sort(localeSort).forEach(l => addFilterButton(loaderFilters, l));
+            [...allFeatures].sort(localeSort).forEach(f => addFilterButton(featureFilters, f));
+            [...allGameplay].sort(localeSort).forEach(g => addFilterButton(gameplayFilters, g));
+            [...allMeta].sort(localeSort).forEach(m => addFilterButton(metaFilters, m));
+            [...allCommunity].sort(localeSort).forEach(c => addFilterButton(communityFilters, c));
+            [...allRegion].sort(localeSort).forEach(r => addFilterButton(regionFilters, r));
+            [...allLanguage].sort(localeSort).forEach(l => addFilterButton(languageFilters, l));
         }
 
         function compareVersionsDesc(a, b) {
@@ -359,6 +402,7 @@
             const card = document.createElement("div");
             card.className = "project-card";
             card.id = p["web-id"];
+            card.dataset.status = "unknown";
 
             let badgeHTML = '';
             const now = new Date();
@@ -388,34 +432,52 @@
                 }
             }
 
+            const editions = new Set();
             const loaders = new Set();
             const gameVersions = new Set();
 
-            p.versions.forEach(v => {
-                v.variants.forEach(va => {
-                    va.loader.forEach(l => loaders.add(l));
-                    va["game-version"].forEach(gv => gameVersions.add(gv));
+            (p.versions || []).forEach(v => {
+                (v.variants || []).forEach(va => {
+                    (va.edition || []).forEach(e => editions.add(e));
+                    (va.loader || []).forEach(l => loaders.add(l));
+                    (va["game-version"] || []).forEach(gv => gameVersions.add(gv));
                 });
             });
 
-            const tags = [...loaders, ...p.environments, ...p.categories];
+            const cat = key => Array.isArray(p[key]) ? p[key] : [];
+            const features = cat("features");
+            const gameplay = cat("gameplay");
+            const meta = cat("meta");
+            const community = cat("community");
+            const region = cat("region");
+            const language = cat("language");
+
+            const tags = [...editions, ...loaders, ...region, ...language, ...features, ...gameplay, ...meta, ...community];
 
             card.dataset.tags = [...tags, ...gameVersions].join(",");
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
+            editions.forEach(e => allEditions.add(e));
             loaders.forEach(l => allLoaders.add(l));
-            p.categories.forEach(c => allCategories.add(c));
-            p.environments.forEach(e => allEnvironments.add(e));
+            features.forEach(f => allFeatures.add(f));
+            gameplay.forEach(g => allGameplay.add(g));
+            meta.forEach(m => allMeta.add(m));
+            community.forEach(c => allCommunity.add(c));
+            region.forEach(r => allRegion.add(r));
+            language.forEach(l => allLanguage.add(l));
             gameVersions.forEach(gv => allGameVersions.add(gv));
 
-            const MAX_TAGS = 5;
+            const MAX_TAGS = 6;
             const visibleTags = tags.slice(0, MAX_TAGS);
             const hiddenTags = tags.slice(MAX_TAGS);
 
             function renderTagSpan(t) {
-                const color = loaders.has(t) ? loaderColors[t] || '#fff' : '#fff';
-                const border = loaders.has(t) ? `1px solid ${color}` : 'none';
+                let color = '#fff';
+                let borderWidth = 0;
+                if (loaders.has(t)) { color = loaderColors[t] || '#fff'; borderWidth = 1; }
+                else if (editions.has(t)) { color = editionColors[t] || '#fff'; borderWidth = 2; }
+                const border = borderWidth ? `${borderWidth}px solid ${color}` : 'none';
                 return `<span style="color:${color}; border:${border};">${t}</span>`;
             }
 
@@ -431,6 +493,13 @@
                 ${visibleTags.map(t => renderTagSpan(t)).join('')}
                 ${overflowHTML}
             </div>`;
+
+            const statusHTML = p["server-address"] ? `
+            <div class="server-status checking">
+                <span class="status-dot"></span>
+                <span class="status-text">Checking…</span>
+                <span class="player-count"></span>
+            </div>` : '';
 
             const lastUpdate = getLatestUploadDate(p);
             const publishDate = p["publish-date"] ? new Date(p["publish-date"]).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : null;
@@ -470,6 +539,7 @@
                 ${p.archived ? '<span class="archived-label">Archived</span>' : ''}
                 </h3>
                 <p>${p.description}</p>
+                ${statusHTML}
                 ${tagsHTML}
                 </div>
                 <div class="card-controls">
@@ -484,7 +554,7 @@
                 </div>
                 </div>
                 <div class="project-versions">
-                ${p.versions.map((v, i) => `
+                ${(p.versions || []).map((v, i) => `
                 <div class="version-row">
                     <span class="changelog-btn" data-index="${i}" data-tooltip="Changelog"></span>
                     <span>${v["project-version"]}</span>
@@ -513,7 +583,15 @@
                 })()}
                             </span>
                             <span>${va["upload-date"] ? new Date(va["upload-date"]).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}</span>
-                            ${va.download ? `<a class="download-btn" href="${va.download}" target="_blank">Download</a>` : ""}
+                            ${(() => {
+                    if (va.join) {
+                        return `<a class="download-btn join-btn" data-adress="${(va.join.adress ?? va.join.address) || ""}" data-port="${va.join.port ?? ""}">Join</a>`;
+                    }
+                    if (va.download) {
+                        return `<a class="download-btn" href="${va.download}" target="_blank">Download</a>`;
+                    }
+                    return "";
+                })()}
                         </div>
                         `).join("")}
                     ${v.changelog ? `
@@ -528,6 +606,39 @@
                 </div>`;
 
             normalGrid.appendChild(card);
+
+            // --- LIVE STATUS + PLAYER COUNT ---
+            const statusEl = card.querySelector(".server-status");
+            if (statusEl && p["server-address"]) {
+                fetchServerStatus(p["server-address"], p.only_bedrock).then(status => {
+                    const text = statusEl.querySelector(".status-text");
+                    const count = statusEl.querySelector(".player-count");
+                    statusEl.classList.remove("checking");
+
+                    if (status.online) {
+                        statusEl.classList.add("online");
+                        statusEl.classList.remove("offline");
+                        text.textContent = "Online";
+                        count.textContent = `${status.players.online}/${status.players.max} players`;
+                        card.dataset.status = "online";
+                    } else {
+                        statusEl.classList.add("offline");
+                        statusEl.classList.remove("online");
+                        text.textContent = "Offline";
+                        count.textContent = "";
+                        card.dataset.status = "offline";
+                    }
+                    applyFilters();
+                });
+            }
+
+            // --- JOIN BUTTONS ---
+            card.querySelectorAll(".join-btn").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    e.stopPropagation();
+                    openJoinPopup(btn, btn.dataset.adress, btn.dataset.port);
+                });
+            });
 
             card.querySelectorAll("[data-tooltip]").forEach(el => {
                 const tooltip = document.createElement("div");
@@ -881,6 +992,8 @@
                 let matchesArchived = true;
                 if (archivedFilter !== null) matchesArchived = archivedFilter ? card.dataset.archived === "true" : card.dataset.archived === "false";
 
+                let matchesStatus = true;
+                if (statusFilter !== null) matchesStatus = card.dataset.status === statusFilter;
 
                 let matchesFavorites = true;
                 if (filterFavorites) {
@@ -888,12 +1001,81 @@
                     matchesFavorites = favorites.includes(card.id);
                 }
 
-                card.style.display = matchesFilters && matchesSearch && matchesArchived && matchesFavorites ? "block" : "none";
+                card.style.display = matchesFilters && matchesSearch && matchesArchived && matchesStatus && matchesFavorites ? "block" : "none";
             });
         }
 
+        // --- JOIN POPUP ---
+        function openJoinPopup(button, adress, port) {
+            closeJoinPopup();
+
+            const popup = document.createElement("div");
+            popup.className = "join-popup";
+            popup.id = "joinPopup";
+
+            popup.innerHTML = `
+                <div class="join-popup-row" data-copy="${adress || ""}">
+                    <span class="join-popup-label">IP</span>
+                    <span class="join-popup-value">${adress || "—"}</span>
+                </div>
+                <div class="join-popup-row" data-copy="${port || ""}">
+                    <span class="join-popup-label">Port</span>
+                    <span class="join-popup-value">${port || "—"}</span>
+                </div>
+                <div class="join-popup-hint">Click to copy</div>
+            `;
+
+            document.body.appendChild(popup);
+
+            popup.style.fontFamily = getComputedStyle(button).fontFamily;
+
+            const rect = button.getBoundingClientRect();
+            let top = rect.top + window.scrollY - popup.offsetHeight - 8;
+            if (top < window.scrollY + 8) top = rect.bottom + window.scrollY + 8;
+            let left = rect.left + window.scrollX + rect.width / 2 - popup.offsetWidth / 2;
+            left = Math.max(8, Math.min(left, window.innerWidth - popup.offsetWidth - 8));
+            popup.style.top = top + "px";
+            popup.style.left = left + "px";
+
+            requestAnimationFrame(() => popup.classList.add("visible"));
+
+            popup.querySelectorAll(".join-popup-row").forEach(row => {
+                row.addEventListener("click", () => {
+                    const text = row.dataset.copy;
+                    if (!text) return;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const value = row.querySelector(".join-popup-value");
+                        const original = value.textContent;
+                        row.classList.add("copied");
+                        value.textContent = "Copied!";
+                        setTimeout(() => {
+                            value.textContent = original;
+                            row.classList.remove("copied");
+                        }, 900);
+                    }).catch(() => console.warn("Copy failed!"));
+                });
+            });
+        }
+
+        function closeJoinPopup() {
+            const existing = document.getElementById("joinPopup");
+            if (existing) existing.remove();
+        }
+
+        document.addEventListener("click", e => {
+            if (!document.getElementById("joinPopup")) return;
+            if (e.target.closest(".join-popup")) return;
+            if (e.target.closest(".join-btn")) return;
+            closeJoinPopup();
+        });
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeJoinPopup();
+        });
+
         // --- LOADER ---
         async function init() {
+            await loadEditionColors();
             await loadLoaderColors();
             await loadAuthors();
             loadProjectFilesList();

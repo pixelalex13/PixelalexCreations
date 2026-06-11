@@ -45,6 +45,7 @@
                 <a href="../modpacks/">Modpacks</a>
                 <a href="../plugins/">Plugins</a>
                 <a href="../worlds/">Worlds</a>
+                <a href="../servers/">Servers</a>
             </nav>
         </div>
         <div class="nav-right">
@@ -432,15 +433,25 @@
                         <div class="variant-row">
                             <span>${va["game-version"].join(", ")}</span>
                             <span>
-                            ${Array.isArray(va.dependencies) && va.dependencies.length > 0
-                    ? `Requires: ${va.dependencies
-                        .filter(d => d.name && d.url)
-                        .map(d => `<a class="dependency" target="_blank" href="${d.url}">${d.name}</a>`)
-                        .join(", ")}`
-                    : "—"}
+                            ${(() => {
+                    const parts = [];
+                    if (Array.isArray(va.dependencies) && va.dependencies.length > 0) {
+                        parts.push(`Requires: ${va.dependencies
+                            .filter(d => d.name && d.url)
+                            .map(d => `<a class="dependency" target="_blank" href="${d.url}">${d.name}</a>`)
+                            .join(", ")}`);
+                    }
+                    if (Array.isArray(va.recomenditions) && va.recomenditions.length > 0) {
+                        parts.push(`Recommends: ${va.recomenditions
+                            .filter(d => d.name && d.url)
+                            .map(d => `<a class="dependency" target="_blank" href="${d.url}">${d.name}</a>`)
+                            .join(", ")}`);
+                    }
+                    return parts.length ? parts.join("<br>") : "—";
+                })()}
                             </span>
                             <span>${va["upload-date"] ? new Date(va["upload-date"]).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}</span>
-                            <a class="download-btn" href="${va.download}" target="_blank">Download</a>
+                            ${va.download ? `<a class="download-btn" href="${va.download}" target="_blank">Download</a>` : ""}
                         </div>
                         `).join("")}
                     ${v.changelog ? `
@@ -492,25 +503,23 @@
                 const name = el.dataset.author;
                 const roleOverride = el.dataset.role;
 
-                const data = AUTHORS[name];
-                if (!data) return;
+                const data = AUTHORS[name] || {};
 
-                const role = roleOverride || data.defaultRole || "Contributor";
+                const avatar = data.avatar || "../resources/images/avatars/default.png";
+                const role = roleOverride || data.defaultRole || "";
 
                 const popup = document.createElement("div");
                 popup.className = "author-popup";
                 popup.innerHTML = `
                 <div class="avatar-container">
-                    <img src="${data.avatar}" alt="${name}">
-                    <a href="${data.discord}" target="_blank" class="discord-btn-small"></a>
+                    <img src="${avatar}" alt="${name}">
+                    ${data.discord ? `<a href="${data.discord}" target="_blank" class="discord-btn-small"></a>` : ""}
                 </div>
-                <div>
-                    <span>${name}</span>
+                <div class="author-info">
+                    <span class="author-name">${name}</span>
+                    ${role ? `<div class="role">${role}</div>` : ""}
                 </div>
-                <div class="role">${role}</div>
                 `;
-
-
 
                 el.appendChild(popup);
 

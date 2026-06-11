@@ -1,0 +1,116 @@
+.server-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    font-size: 0.85em;
+}
+
+.server-status .status-dot {
+    width: 9px;
+    height: 9px;
+    background: #888;
+    flex-shrink: 0;
+    /* pixel-art: square dot, no rounding */
+}
+
+.server-status.online .status-dot {
+    background: #5fd35f;
+    box-shadow: 0 0 6px #5fd35f;
+}
+
+.server-status.offline .status-dot {
+    background: #e25555;
+    box-shadow: 0 0 6px #e25555;
+}
+
+.server-status.checking .status-dot {
+    background: #888;
+    animation: statusPulse 1s ease-in-out infinite;
+}
+
+.server-status .status-text {
+    font-weight: bold;
+}
+
+.server-status .player-count {
+    opacity: 0.8;
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.download-btn.join-btn {
+    background: #4a90d9;
+    border-color: #4a90d9;
+    cursor: pointer;
+}
+
+.download-btn.join-btn:hover {
+    filter: brightness(1.12);
+}
+
+.join-popup {
+    position: absolute;
+    z-index: 1000;
+    min-width: 160px;
+    padding: 8px;
+    background: #1e1e24;
+    border: 1px solid #4a90d9;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    font-size: 0.85em;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.join-popup.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.join-popup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 5px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.join-popup-row:hover {
+    background: rgba(74, 144, 217, 0.15);
+}
+
+.join-popup-row.copied {
+    background: rgba(95, 211, 95, 0.18);
+}
+
+.join-popup-label {
+    opacity: 0.6;
+    margin-right: 5px;
+}
+
+.join-popup-value {
+    font-size: 12px;
+}
+
+.join-popup-hint {
+    margin-top: 4px;
+    text-align: center;
+    opacity: 0.45;
+    font-size: 0.8em;
+}
