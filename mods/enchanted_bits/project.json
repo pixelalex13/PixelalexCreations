@@ -14,6 +14,15 @@
       "project-version": "v1.1",
       "variants": [
         {
+          "game-version": ["26.2"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-06-23",
+          "download": "https://drive.google.com/uc?export=download&id=1HE5g1K_EvbjI8YT4J-K9b5jrlaaqGsDl"
+        },
+        {
           "game-version": ["26.1.2", "26.1.1", "26.1"],
           "loader": ["Fabric", "Quilt"],
           "dependencies": [
