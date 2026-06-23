@@ -8,6 +8,7 @@
   "screenshots": [],
   "categories": ["Game Mechanics", "Minigame"],
   "environments": ["Server"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {

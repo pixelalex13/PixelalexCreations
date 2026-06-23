@@ -340,12 +340,15 @@
         }
 
         function createProject(p) {
+            if (p.visibility === "private") return;
+
             const authors = p.authors?.length
                 ? p.authors
                 : [{ name: p.author || "Unknown" }];
             const card = document.createElement("div");
             card.className = "project-card";
             card.id = p["web-id"];
+            card.dataset.visibility = p.visibility || "public";
 
             let badgeHTML = '';
             const now = new Date();
@@ -391,11 +394,13 @@
             card.dataset.searchText = (p.name + " " + p.description).toLowerCase();
             card.dataset.archived = p.archived;
 
-            loaders.forEach(l => allLoaders.add(l));
-            p.performance_impact.forEach(p => allPerformanceImpacts.add(p));
-            p.categories.forEach(c => allCategories.add(c));
-            p.features.forEach(f => allFeatures.add(f));
-            gameVersions.forEach(gv => allGameVersions.add(gv));
+            if ((p.visibility || "public") === "public") {
+                loaders.forEach(l => allLoaders.add(l));
+                p.performance_impact.forEach(p => allPerformanceImpacts.add(p));
+                p.categories.forEach(c => allCategories.add(c));
+                p.features.forEach(f => allFeatures.add(f));
+                gameVersions.forEach(gv => allGameVersions.add(gv));
+            }
 
             const MAX_TAGS = 5;
             const visibleTags = tags.slice(0, MAX_TAGS);
@@ -602,6 +607,10 @@
                 }
                 const versions = card.querySelector(".project-versions");
                 versions.style.maxHeight = card.classList.contains("open") ? versions.scrollHeight + "px" : "0";
+                if ((card.dataset.visibility || "public") === "unlisted") {
+                    if (card.classList.contains("open")) showUnlistedCard(card);
+                    else hideUnlistedCard(card);
+                }
             });
 
             // Screenshot-Button
@@ -859,10 +868,61 @@
             }
         });
 
+        // --- Card Animation ---
+        function showUnlistedCard(card) {
+            if (card.dataset.animState === "shown") return;
+            card.dataset.animState = "shown";
+
+            card.style.display = "block";
+            card.classList.add("card-anim", "card-clip", "card-collapsed");
+
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                card.style.maxHeight = card.scrollHeight + "px";
+                card.classList.remove("card-collapsed");
+                const done = e => {
+                    if (e.target !== card || e.propertyName !== "max-height") return;
+                    card.style.maxHeight = "";
+                    card.classList.remove("card-anim", "card-clip");
+                    card.removeEventListener("transitionend", done);
+                };
+                card.addEventListener("transitionend", done);
+            }));
+        }
+
+        function hideUnlistedCard(card) {
+            if (card.dataset.animState !== "shown") {
+                card.dataset.animState = "hidden";
+                card.style.display = "none";
+                card.style.maxHeight = "";
+                card.classList.remove("card-collapsed", "card-anim", "card-clip");
+                return;
+            }
+            card.dataset.animState = "hidden";
+
+            card.classList.add("card-anim", "card-clip");
+            card.style.maxHeight = card.scrollHeight + "px";
+            requestAnimationFrame(() => {
+                card.classList.add("card-collapsed");
+            });
+            const done = e => {
+                if (e.target !== card || e.propertyName !== "max-height") return;
+                card.style.display = "none";
+                card.style.maxHeight = "";
+                card.classList.remove("card-anim", "card-clip", "card-collapsed");
+                card.removeEventListener("transitionend", done);
+            };
+            card.addEventListener("transitionend", done);
+        }
+
         // --- FILTER ---
         function applyFilters() {
             const query = searchBox.value.toLowerCase();
             document.querySelectorAll(".project-card").forEach(card => {
+                if ((card.dataset.visibility || "public") === "unlisted") {
+                    if (card.classList.contains("open")) showUnlistedCard(card);
+                    else hideUnlistedCard(card);
+                    return;
+                }
                 const tags = card.dataset.tags.split(",");
                 const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f));
                 const matchesSearch = !query || card.dataset.searchText.includes(query);
@@ -896,12 +956,13 @@
                 if (versions) versions.style.maxHeight = "0";
             });
 
-            if (!hash) return;
+            const targetCard = hash ? document.getElementById(hash) : null;
+            if (targetCard) targetCard.classList.add("open");
 
-            const targetCard = document.getElementById(hash);
+            applyFilters();
+
             if (!targetCard) return;
 
-            targetCard.classList.add("open");
             const versions = targetCard.querySelector(".project-versions");
 
             if (versions) {

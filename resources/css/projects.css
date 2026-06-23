@@ -15,6 +15,24 @@
     max-width: 900px;
 }
 
+.project-card.card-anim {
+    transition: max-height 0.35s ease;
+}
+
+.project-card.card-clip {
+    overflow: hidden;
+}
+
+.project-card.card-clip .new-publish-badge-icon,
+.project-card.card-clip .new-update-badge-icon {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.project-card.card-collapsed {
+    max-height: 0 !important;
+}
+
 .project-header {
     display: flex;
     gap: 16px;

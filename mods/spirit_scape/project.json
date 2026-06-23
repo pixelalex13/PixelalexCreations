@@ -16,6 +16,7 @@
   ],
   "categories": ["Adventure", "Decoration", "Equipment", "Magic", "Utility"],
   "environments": ["Client and Server"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {

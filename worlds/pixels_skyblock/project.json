@@ -9,6 +9,7 @@
     { "src": "screenshots/1.png", "caption": "Custom Advancements" }
   ],
   "categories": ["Adventure", "Challenging", "Survival"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {

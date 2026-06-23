@@ -13,6 +13,7 @@
   ],
   "categories": ["Adventure", "Cursed"],
   "environments": ["Client and Server"],
+  "visibility": "public",
   "archived": true,
   "versions": [
     {

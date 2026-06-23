@@ -8,6 +8,7 @@
   "screenshots": [],
   "categories": ["Combat", "Decoration", "Utility", "Vanilla-like"],
   "features": ["Blocks", "Equipment", "Items"],
+  "visibility": "public",
   "archived": true,
   "versions": [
     {

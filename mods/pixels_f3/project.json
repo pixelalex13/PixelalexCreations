@@ -10,6 +10,7 @@
   ],
   "categories": ["Utility"],
   "environments": ["Client"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {

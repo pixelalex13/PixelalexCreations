@@ -10,6 +10,7 @@
   ],
   "categories": ["Tweaks"],
   "features": ["Audio"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {

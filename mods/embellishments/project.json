@@ -8,6 +8,7 @@
   "screenshots": [],
   "categories": ["Decoration", "Game Mechanics", "Technology", "Utility"],
   "environments": ["Client and Server"],
+  "visibility": "public",
   "archived": false,
   "versions": [
     {
