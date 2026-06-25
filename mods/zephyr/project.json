@@ -1,0 +1,34 @@
+{
+  "name": "Zephyr",
+  "web-id": "zephyr",
+  "publish-date": "2026-06-25",
+  "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "description": "A vanilla-plus mod that restores removed and unused content, fixes overlooked bugs, and refines underutilized mechanics.",
+  "icon": "icon.png",
+  "screenshots": [
+    { "src": "screenshots/1.png", "caption": "Clovers spawn in small patches around grassy landscapes" },
+    { "src": "screenshots/2.png", "caption": "The Clover, Rotten Clover and Wither Rose can now be used to brew potions" },
+    { "src": "screenshots/3.png", "caption": "The new Void Banner spawning in End Cities" }
+  ],
+  "categories": ["Equipment", "Game Mechanics", "Utility", "World Generation"],
+  "environments": ["Client and Server"],
+  "visibility": "public",
+  "archived": false,
+  "versions": [
+    {
+      "project-version": "v1.0",
+      "variants": [
+        {
+          "game-version": ["26.2"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-06-25",
+          "download": "https://drive.google.com/uc?export=download&id=1pond9BUBun6kLg0SmYgMI1jd8rrUBJnM"
+        }
+      ],
+      "changelog": "changelogs/1.0.md"
+    }
+  ]
+}
