@@ -10,5 +10,11 @@
     "discord": "https://discord.com/users/973591534651977808",
     "mainRole": "Builder",
     "defaultRole": "Builder"
+  },
+  "EnderMind385": {
+    "avatar": "../resources/images/avatars/EnderMind385.png",
+    "discord": "https://discord.com/users/840569296006807602",
+    "mainRole": "Translator",
+    "defaultRole": "Translator"
   }
 }

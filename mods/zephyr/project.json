@@ -3,18 +3,36 @@
   "web-id": "zephyr",
   "publish-date": "2026-06-25",
   "authors": [{ "name": "pixelalex13", "role": "Owner"}],
+  "contributors": [{ "name": "EnderMind385", "role": "Translator"}],
   "description": "A vanilla-plus mod that restores removed and unused content, fixes overlooked bugs, and refines underutilized mechanics.",
   "icon": "icon.png",
   "screenshots": [
     { "src": "screenshots/1.png", "caption": "Clovers spawn in small patches around grassy landscapes" },
     { "src": "screenshots/2.png", "caption": "The Clover, Rotten Clover and Wither Rose can now be used to brew potions" },
-    { "src": "screenshots/3.png", "caption": "The new Void Banner spawning in End Cities" }
+    { "src": "screenshots/3.png", "caption": "The new Void Banner spawning in End Cities" },
+    { "src": "screenshots/4.png", "caption": "Toggle item frame visibility by sneak-clicking with an empty hand, and reveal hidden ones by holding an item frame." },
+    { "src": "screenshots/5.gif", "caption": "A book listing the formatting codes, applied by typing '§' followed by the corresponding character." }
   ],
-  "categories": ["Equipment", "Game Mechanics", "Utility", "World Generation"],
+  "categories": ["Decoration", "Equipment", "Game Mechanics", "Utility", "World Generation"],
   "environments": ["Client and Server"],
   "visibility": "public",
   "archived": false,
   "versions": [
+    {
+      "project-version": "v1.1",
+      "variants": [
+        {
+          "game-version": ["26.2"],
+          "loader": ["Fabric", "Quilt"],
+          "dependencies": [
+            {"name": "Fabric API","url": "https://modrinth.com/mod/fabric-api"}
+          ],
+          "upload-date": "2026-07-09",
+          "download": "https://drive.google.com/uc?export=download&id=1t8DMcNoOW1010I6ggTpHh4B7KXQpQULy"
+        }
+      ],
+      "changelog": "changelogs/1.1.md"
+    },
     {
       "project-version": "v1.0",
       "variants": [
