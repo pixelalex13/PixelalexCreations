@@ -285,19 +285,46 @@
 
         searchBox.addEventListener("input", applyFilters);
 
-        function addFilterButton(container, value) {
+        function addFilterButton(container, value, colorMap) {
             if (!container) return;
             if ([...container.children].some(b => b.dataset.filter === value)) return;
             const btn = document.createElement("button");
             btn.className = "filter-btn";
             btn.dataset.filter = value;
             btn.textContent = value;
+            const originalColor = colorMap ? colorMap[value] : null;
+            if (originalColor) {
+                btn.style.color = originalColor;
+                btn.style.borderColor = originalColor;
+            }
             btn.onclick = () => {
                 btn.classList.toggle("active");
                 activeFilters.has(value) ? activeFilters.delete(value) : activeFilters.add(value);
+                if (btn.classList.contains("active") && originalColor) {
+                    btn.style.borderColor = lightenColor(originalColor, 60);
+                } else if (originalColor) {
+                    btn.style.borderColor = originalColor;
+                }
                 applyFilters();
             }
             container.appendChild(btn);
+        }
+
+        // --- LIGHTEN COLOR FOR FILTER ---
+        function lightenColor(hex, percent) {
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+
+            const num = parseInt(hex, 16);
+            let r = (num >> 16) + percent;
+            let g = ((num >> 8) & 0x00FF) + percent;
+            let b = (num & 0x0000FF) + percent;
+
+            r = r > 255 ? 255 : r;
+            g = g > 255 ? 255 : g;
+            b = b > 255 ? 255 : b;
+
+            return `#${(r.toString(16).padStart(2, '0'))}${(g.toString(16).padStart(2, '0'))}${(b.toString(16).padStart(2, '0'))}`;
         }
 
         const localeSort = (a, b) => a.localeCompare(b, undefined, { sensitivity: "base" });
@@ -372,8 +399,8 @@
                 .sort(compareVersionsDesc)
                 .forEach(v => addFilterButton(gameVersionFilters, v));
 
-            [...allEditions].sort(localeSort).forEach(e => addFilterButton(editionFilters, e));
-            [...allLoaders].sort(localeSort).forEach(l => addFilterButton(loaderFilters, l));
+            [...allEditions].sort(localeSort).forEach(e => addFilterButton(editionFilters, e, editionColors));
+            [...allLoaders].sort(localeSort).forEach(l => addFilterButton(loaderFilters, l, loaderColors));
             [...allFeatures].sort(localeSort).forEach(f => addFilterButton(featureFilters, f));
             [...allGameplay].sort(localeSort).forEach(g => addFilterButton(gameplayFilters, g));
             [...allMeta].sort(localeSort).forEach(m => addFilterButton(metaFilters, m));

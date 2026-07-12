@@ -932,11 +932,6 @@
                     else hideUnlistedCard(card);
                     return;
                 }
-                if ((card.dataset.visibility || "public") === "unlisted") {
-                    if (card.classList.contains("open")) showUnlistedCard(card);
-                    else hideUnlistedCard(card);
-                    return;
-                }
                 const tags = card.dataset.tags.split(",");
                 const matchesFilters = activeFilters.size === 0 || [...activeFilters].every(f => tags.includes(f));
                 const matchesSearch = !query || card.dataset.searchText.includes(query);
